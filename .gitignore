@@ -7,14 +7,10 @@
 # Backups written by hypr/install.sh and the web UI
 .backup/
 
-# Artwork fetched at install time - see src/static/assets/fetch.sh
-src/static/assets/wukong/
-src/static/assets/*.webm
-src/static/favicon.ico
-
 # Static export from tools/export-static.sh
 dist/
 
 # Lapis leftovers
 nginx.conf.compiled
 logs/
+.vercel

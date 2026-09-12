@@ -7,24 +7,21 @@
 # the result needs no Lua, no Hyprland and no filesystem writes at runtime. Host
 # it on Vercel, Netlify, GitHub Pages or any static host.
 #
-#   tools/export-static.sh              neutral placeholder art (publishable)
-#   tools/export-static.sh --real-art   this machine's fetched artwork
+#   tools/export-static.sh
 #
-# --real-art copies Game Science's images into the build. That is fine for a
-# private host and is copyright infringement on a public one. Default is the
-# placeholder set drawn by tools/placeholder-art.sh.
+# The build looks exactly like the local app: the theme images are loaded from
+# gamesci.cn by the stylesheet, and the wallpaper, its poster and the favicon
+# are copied from src/static since they live in this repo.
 #
-# Editing is disabled in the output: the app renders with ARCHCONFIG_DEMO=1,
-# which marks both forms `inert` and puts a banner on every page.
+# The only difference is that editing is off. The app renders with
+# ARCHCONFIG_DEMO=1, which marks both forms `inert`, drops the save buttons and
+# puts a banner on every page - there is no server behind the output to save to.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TOOLS="$ROOT/.tools/local"
 DIST="$ROOT/dist"
 PORT=8099
-REAL_ART=0
-NO_VIDEO=0
-[[ "${1:-}" == "--real-art" ]] && REAL_ART=1
 
 ROUTES=(
   "/:index.html"
@@ -49,29 +46,17 @@ echo "==> clearing $DIST"
 rm -rf "$DIST"
 mkdir -p "$DIST/static"
 
-echo "==> copying stylesheet, script and font"
-cp -r "$ROOT/src/static/css" "$ROOT/src/static/js" "$ROOT/src/static/fonts" "$DIST/static/"
-
-echo "==> artwork"
-if [[ "$REAL_ART" == 1 ]]; then
-  mkdir -p "$DIST/static/assets/wukong"
-  cp -r "$ROOT/src/static/assets/wukong/." "$DIST/static/assets/wukong/" 2>/dev/null || true
-  cp "$ROOT/src/static/favicon.ico" "$DIST/static/favicon.ico" 2>/dev/null || true
-  [[ -f "$ROOT/src/static/assets/live-wallpaper-4k.webm" ]] \
-    && cp "$ROOT/src/static/assets/live-wallpaper-4k.webm" "$DIST/static/assets/"
-  echo "  !! real artwork copied - do NOT host this publicly"
-else
-  "$ROOT/tools/placeholder-art.sh" "$DIST/static/assets/wukong"
-  mv "$DIST/static/assets/wukong/favicon.ico" "$DIST/static/favicon.ico"
-  # No video in this build, so do not render a <video> pointing at a 404.
-  NO_VIDEO=1
-fi
+echo "==> copying static files"
+# Everything under src/static, which is the stylesheet, the script, the font,
+# the favicon, the wallpaper and its poster. The theme images are not here:
+# the stylesheet points at gamesci.cn for those.
+cp -r "$ROOT/src/static/." "$DIST/static/"
+find "$DIST/static" -type f | sed "s|$DIST/static/|  |" | sort
 
 echo "==> starting a render server on :$PORT"
 [[ -n "$(listener)" ]] && { echo "port $PORT busy" >&2; exit 1; }
 (
   export DOTFILES_ROOT="$ROOT" ARCHCONFIG_DEMO=1 ARCHCONFIG_PORT="$PORT"
-  export ARCHCONFIG_NO_VIDEO="${NO_VIDEO:-0}"
   export PATH="$TOOLS/bin:$PATH"
   eval "$("$TOOLS/bin/luarocks" path)"
   export LUA_PATH="$ROOT/?.lua;$ROOT/?/init.lua;$ROOT/src/?.lua;$ROOT/src/?/init.lua;$LUA_PATH"
@@ -122,3 +107,7 @@ echo "Built $DIST ($(du -sh "$DIST" | cut -f1))"
 echo
 echo "Preview:  cd dist && python3 -m http.server 8000"
 echo "Deploy:   cd dist && npx vercel deploy --prod"
+echo
+echo "The theme images load from gamesci.cn at view time. If they ever vanish,"
+echo "their content hashes changed - update the nine URLs at the top of"
+echo "src/static/css/wukong.css."

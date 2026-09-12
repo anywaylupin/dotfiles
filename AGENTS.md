@@ -57,7 +57,7 @@ src/
   views/               etlua templates
     layout.etlua       top bar + full-width stage; every page but the homepage
     home.etlua         the homepage, a complete bare document with no top bar
-  static/              css, js, fonts; artwork fetched by assets/fetch.sh
+  static/              css, js, font, favicon, wallpaper
 hypr/                  THE LIVE CONFIG - see the rule above
   settings.lua         machine-managed values
   keybinds.lua         machine-managed combos, plain data
@@ -69,10 +69,9 @@ hypr/                  THE LIVE CONFIG - see the rule above
 ## Running it
 
 ```bash
-./.tools/build.sh             # once: LuaJIT, LuaRocks, Lapis into .tools/ - no root
-src/static/assets/fetch.sh    # once: the theme artwork
-./dev                         # serve http://127.0.0.1:8080
-./dev stop                    # stop it
+./.tools/build.sh   # once: LuaJIT, LuaRocks, Lapis into .tools/ - no root
+./dev               # serve http://127.0.0.1:8080
+./dev stop          # stop it
 ```
 
 `dev` runs lapis with cwd `src/` and puts both the repo root and `src/` on
@@ -256,31 +255,27 @@ Three properties of that export matter and are easy to break:
   honour the flag too.
 - **The export scrubs the username** from the HTML, because the storage table
   carries `/home/<user>` and `/run/media/<user>` mount paths.
-- **Placeholder art is the default.** `tools/placeholder-art.sh` draws original
-  shapes in the theme palette so a public build ships none of Game Science's
-  images. `--real-art` exists for private hosts and says so loudly.
+- **The export copies all of `src/static`**, so the wallpaper, poster, favicon
+  and font come from your own domain while the theme images stay hotlinked.
 
 ## Assets
 
-`static/assets/wukong/` is cached from the official site (gamesci.cn/wukong) and
-`static/assets/live-wallpaper-4k.webm` came from a wallpaper aggregator. The
-palette in `static/css/wukong.css` was derived by frequency-analysing that
-site's stylesheet.
+The theme's nine images are **hotlinked from gamesci.cn** by the stylesheet, not
+stored here. They are declared once as `--art-*` custom properties at the top of
+`src/static/css/wukong.css`; use those variables rather than writing a URL
+inline, so there is one place to repair.
 
-**These are not redistributable.** They are Game Science's copyrighted artwork,
-fine to cache for a personal offline dashboard, not fine to publish.
+Those filenames are content-hashed by their build, so they will eventually 404.
+That degrades to the flat palette rather than breaking, which is the intended
+failure mode - do not add a fallback image, and do not start caching copies into
+the repo.
 
-This is already handled: the artwork is gitignored and
-`src/static/assets/fetch.sh` pulls it at install time, so a clone is functional
-without the repo carrying the bytes. The CSS degrades to the flat palette when
-it is absent - the wordmark is a background rather than an `<img>` so a missing
-file shows nothing instead of a broken-image icon.
+In the repo: `src/static/assets/live-wallpaper-4k.webm` (9 MB),
+`src/static/assets/wallpaper-poster.jpg` (a frame of it, so there is no black
+flash before the video decodes) and `src/static/favicon.ico` (the site's own).
+`src/static/fonts/CrimsonPro-*` is SIL OFL 1.1 and is the one asset with a
+licence that permits redistribution.
 
-`src/static/fonts/CrimsonPro-*` is **Crimson Pro**, SIL OFL 1.1, and is the one
-asset shipped in-repo.
-
-Still to do before publishing:
-
-1. Add a `LICENSE` for your own code.
-2. Ship `OFL.txt` beside the font, or link Google Fonts instead.
-3. Genericise the absolute home paths in `hypr/README.md`.
+Publishing note: hotlinking keeps their images out of the repo, but a public
+deploy still displays their artwork and serves the wallpaper from your domain.
+That is the user's call and they have made it.

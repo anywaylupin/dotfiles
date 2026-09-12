@@ -26,12 +26,11 @@ sudo pacman -S --needed hyprland kitty dolphin firefox code wofi \
   grim slurp wl-clipboard wireplumber dunst ffmpeg
 ```
 
-Then run the three setup steps. None of them need root:
+Then run the two setup steps. Neither needs root:
 
 ```bash
-./.tools/build.sh             # builds LuaJIT, LuaRocks and Lapis into .tools/
-src/static/assets/fetch.sh    # downloads the theme artwork
-hypr/install.sh               # points ~/.config/hypr at this repo
+./.tools/build.sh   # builds LuaJIT, LuaRocks and Lapis into .tools/
+hypr/install.sh     # points ~/.config/hypr at this repo
 ```
 
 `hypr/install.sh` writes a small stub to `~/.config/hypr/hyprland.lua` that adds
@@ -107,39 +106,42 @@ config - none of which exists on a serverless host. A deployed copy would show
 blank hardware and fail every save.
 
 What does work is a **static snapshot**: every page rendered to plain HTML with a
-frozen copy of this machine's data, read-only, no runtime at all.
+frozen copy of this machine's data. It looks exactly like the local app and is
+read-only.
 
 ```bash
-tools/export-static.sh          # neutral placeholder art, safe to publish
-tools/export-static.sh --real-art   # this machine's fetched artwork
+tools/export-static.sh
+cd dist && npx vercel deploy --prod
 ```
 
-The output lands in `dist/` (gitignored, about 780 KB) with a `vercel.json`
-already in it:
-
-```bash
-cd dist && python3 -m http.server 8000    # preview
-cd dist && npx vercel deploy --prod       # publish
-```
-
-It works the same on Netlify, Cloudflare Pages or GitHub Pages - it is only
-files.
+`dist/` is gitignored and ships with a `vercel.json`. Preview first with
+`cd dist && python3 -m http.server 8000`. Netlify, Cloudflare Pages and GitHub
+Pages work the same way - it is only files.
 
 What the export does:
 
 - renders `/`, `/system`, `/hypr`, `/hypr/binds`, `/resources` and a `404.html`
 - runs the app with `ARCHCONFIG_DEMO=1`, which marks both forms `inert`, drops
   the save buttons and puts a "read-only demo" banner on every page
+- copies everything in `src/static`, so the wallpaper, its poster, the favicon
+  and the font are all served from your own domain
 - **scrubs your username** out of the HTML, since the storage table lists mount
   paths under `/home/<you>` and `/run/media/<you>`
-- draws neutral placeholder art with `tools/placeholder-art.sh` - original
-  shapes in the same palette, so the build carries none of Game Science's images
 
 Search and browsing still work in the export; only editing is off.
 
-`--real-art` copies the fetched Wukong artwork into the build. That is fine
-behind a private URL and is copyright infringement on a public one. The default
-is the placeholder set for that reason.
+### Where the images come from
+
+The theme's nine images are loaded from `gamesci.cn` by the stylesheet rather
+than copied into this repo, which keeps the repo free of their artwork. The URLs
+are declared once as custom properties at the top of
+`src/static/css/wukong.css`.
+
+Those filenames are **content-hashed by their build**. When Game Science
+redeploys their site the hashes change and all nine 404 - the pages still work,
+they just fall back to the flat palette. To repair it, open
+<https://gamesci.cn/wukong>, read the new names out of `css/app.*.css`, and
+update the nine URLs.
 
 ### Getting at the real thing remotely
 
@@ -153,7 +155,6 @@ option and some authentication first. Ask and I will add it.
 | | |
 |---|---|
 | `./.tools/build.sh` | Build the local Lua toolchain. Run once. |
-| `src/static/assets/fetch.sh` | Download the theme artwork. Run once. |
 | `hypr/install.sh` | Point `~/.config/hypr` at this repo. Idempotent. |
 | `./dev` | Serve <http://127.0.0.1:8080> |
 | `./dev production` | Same, with code caching on |
@@ -163,7 +164,6 @@ option and some authentication first. Ask and I will add it.
 | `hyprctl monitors` | List outputs and their modes |
 | `hyprctl binds` | List the binds actually loaded |
 | `tools/export-static.sh` | Build the static showcase into `dist/` |
-| `tools/placeholder-art.sh <dir>` | Draw the neutral stand-in artwork |
 
 ## Where things live
 
@@ -171,7 +171,6 @@ option and some authentication first. Ask and I will add it.
 dev                      start/stop the server
 tools/
   export-static.sh       render every page to dist/ as a static site
-  placeholder-art.sh     draw neutral stand-ins for the theme artwork
 src/
   app.lua                root app: routes, /static, 404
   config.lua             port, backend, secret
@@ -185,7 +184,7 @@ src/
     hypr/binds.lua       keybinds: the same, plus conflict detection
     hypr/hyprctl.lua     live compositor state
   views/                 etlua templates; home.etlua is the bare layout
-  static/                css, js, fonts; artwork fetched by assets/fetch.sh
+  static/                css, js, font, favicon, wallpaper
 hypr/                    THE LIVE CONFIG
   settings.lua           machine-managed values
   keybinds.lua           machine-managed combos, as plain data
@@ -199,8 +198,8 @@ hypr/                    THE LIVE CONFIG
   Nothing is installed system-wide and `sudo` is only needed for `pacman`.
 - The server binds `127.0.0.1` only. It writes compositor config, so writes are
   CSRF-protected and the session secret is generated per install into `.secret`.
-- The artwork is **not redistributable** and is gitignored. `fetch.sh` pulls it
-  at install time; without it the UI falls back to a flat palette.
-  Crimson Pro (SIL OFL 1.1) is the one font shipped in-repo.
+- The theme images are hotlinked from `gamesci.cn`, so none of their artwork is
+  stored here. The repo does carry the 9 MB wallpaper, its poster frame and the
+  favicon. Crimson Pro is SIL OFL 1.1 and safe to ship.
 
 More detail, conventions and gotchas: [AGENTS.md](AGENTS.md).

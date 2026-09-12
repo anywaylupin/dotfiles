@@ -35,7 +35,8 @@ app.layout = "layout"
 
 -- Every page gets the menu and the current path, for highlighting.
 app:before_filter(function(self)
-  self.menu = menu
+  self.menu = menu.items
+  self.repo_url = menu.repo
   self.current_path = self.req.parsed_url.path
   self.asset_v = ASSET_V
   self.demo = DEMO
@@ -113,7 +114,8 @@ end)
 
 -- Unmatched paths get the themed shell rather than Lapis's dev traceback.
 app.handle_404 = function(self)
-  self.menu = menu
+  self.menu = menu.items
+  self.repo_url = menu.repo
   self.current_path = self.req.parsed_url.path
   self.asset_v = ASSET_V
   self.demo = DEMO

@@ -15,7 +15,7 @@
             replaced by its poster frame under reduced-motion. ]] %>
     <div class="wallpaper" aria-hidden="true">
       <video class="wallpaper__video" autoplay muted loop playsinline preload="auto"
-             poster="/static/assets/wukong/wallpaper-poster.jpg">
+             poster="/static/assets/wallpaper-poster.jpg">
         <source src="/static/assets/live-wallpaper-4k.webm" type="video/webm">
       </video>
       <div class="wallpaper__veil"></div>

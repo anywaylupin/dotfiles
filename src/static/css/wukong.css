@@ -6,8 +6,8 @@
    frequency analysis of its stylesheet - #b0813f gold leads with 50 uses,
    then #a83d32 cinnabar, #dfdad3 parchment, #0e6f61 jade.
 
-   Assets in /static/assets/wukong/ are the site's own, cached locally for this
-   personal offline dashboard.                                                */
+   Images are loaded from the official site at runtime - see the Artwork block
+   below - so nothing of theirs is redistributed in this repo.                */
 
 @font-face {
   font-family: "CrimsonPro";
@@ -17,6 +17,35 @@
      made every heading visibly resize once the webfont landed. The file is
      local and preloaded in the layout, so the block period is imperceptible. */
   font-display: block;
+}
+
+/* ── Artwork ─────────────────────────────────────────────────────────────── */
+/*
+   The theme's images are loaded straight from the official site rather than
+   copied into this repo, so no artwork is redistributed here and the repo stays
+   text-only apart from the wallpaper.
+
+   These filenames are CONTENT-HASHED by their build. When Game Science
+   redeploys, the hashes change and every one of these 404s - the page still
+   works, it just falls back to the flat palette. To repair it: open
+   https://gamesci.cn/wukong, read the new names out of css/app.*.css, and
+   update the nine URLs below. They are declared once here for that reason.
+*/
+
+:root {
+  --art-bg:       url("https://gamesci.cn/wukong/img/img_bg.4428a08d.png");
+  --art-hero:     url("https://gamesci.cn/wukong/img/header_bg.addf97d2.png");
+  --art-wordmark: url("https://gamesci.cn/wukong/img/logo_en.3e47ed17.png");
+  --art-frame:    url("https://gamesci.cn/wukong/img/new-item-bc.39d8bfee.png");
+  --art-plaque:   url("https://gamesci.cn/wukong/img/corner_off.ff84ef53.png");
+  --art-btn:      url("https://gamesci.cn/wukong/img/btn2_normal.9226547a.png");
+  --art-btn-hov:  url("https://gamesci.cn/wukong/img/btn1_hover_active.865cb454.png");
+  --art-band:     url("https://gamesci.cn/wukong/img/slider-bg.bde8d4aa.png");
+  --art-vignette: url("https://gamesci.cn/wukong/img/video-overlay-bg.81dc354b.png");
+
+  /* The wallpaper and its poster frame are local: the video is not on their
+     site, and a poster avoids a black flash before the first frame decodes. */
+  --art-poster:   url("/static/assets/wallpaper-poster.jpg");
 }
 
 :root {
@@ -86,7 +115,7 @@ body {
   line-height: 1.55;
   color: var(--paper-200);
   background-color: var(--ink-900);
-  background-image: url("/static/assets/wukong/bg-main.png");
+  background-image: var(--art-bg);
   background-size: 256px;
   background-attachment: fixed;
 }
@@ -118,7 +147,7 @@ body.shell {
   inset: 0;
   background:
     linear-gradient(180deg, rgb(10 9 8 / 0.72) 0, rgb(10 9 8 / 0.45) 45%, rgb(10 9 8 / 0.88) 100%),
-    url("/static/assets/wukong/video-overlay.png") center / cover no-repeat;
+    var(--art-vignette) center / cover no-repeat;
   background-blend-mode: normal, screen;
 }
 
@@ -193,7 +222,24 @@ body.shell {
 }
 .brand__thin { color: var(--paper-400); }
 
-.topnav { display: flex; align-items: stretch; gap: 0.25rem; overflow-x: auto; }
+.topnav { display: flex; align-items: stretch; gap: 0.25rem; overflow-x: auto; flex: 1; }
+
+/* Pushed to the far right by .topnav taking the slack. */
+.topbar__repo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  padding: 0 0.25rem 0 clamp(0.5rem, 2vw, 1.25rem);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--paper-400);
+  border-left: var(--edge-soft);
+  transition: color var(--t-mid) var(--ease);
+}
+.topbar__repo:hover { color: var(--gold-400); }
+.topbar__repo-mark { display: block; }
 
 .topnav__item {
   display: flex;
@@ -247,7 +293,7 @@ body.shell {
   top: 0; left: 0; right: 0;
   height: 340px;
   z-index: -1;
-  background: url("/static/assets/wukong/header-bg.png") center top / cover no-repeat;
+  background: var(--art-hero) center top / cover no-repeat;
   transition: opacity var(--t-slow) var(--ease);
   mask-image: linear-gradient(180deg, rgb(0 0 0 / 0.85), rgb(0 0 0 / 0.3) 45%, transparent 90%);
   -webkit-mask-image: linear-gradient(180deg, rgb(0 0 0 / 0.85), rgb(0 0 0 / 0.3) 45%, transparent 90%);
@@ -292,8 +338,8 @@ body.shell {
   top: -3px; left: 0; right: 0;
   height: 7px;
   background: linear-gradient(90deg, var(--gold-700), var(--gold-500) 40%, var(--gold-700));
-  mask: url("/static/assets/wukong/card-frame.png") top center / 100% auto no-repeat;
-  -webkit-mask: url("/static/assets/wukong/card-frame.png") top center / 100% auto no-repeat;
+  mask: var(--art-frame) top center / 100% auto no-repeat;
+  -webkit-mask: var(--art-frame) top center / 100% auto no-repeat;
   opacity: 0.85;
   pointer-events: none;
 }
@@ -308,7 +354,7 @@ body.shell {
   color: var(--gold-400);
   background:
     linear-gradient(90deg, rgb(176 129 63 / 0.14), transparent 70%),
-    url("/static/assets/wukong/slider-bg.png") left center / auto 260% repeat-x;
+    var(--art-band) left center / auto 260% repeat-x;
   border-bottom: var(--edge-soft);
 }
 /* corner.png is a vermilion lacquer plate on the source site; here it is the
@@ -319,7 +365,7 @@ body.shell {
   left: 1.25rem; top: 50%;
   width: 12px; height: 26px;
   transform: translateY(-50%);
-  background: url("/static/assets/wukong/corner.png") center / 100% 100% no-repeat;
+  background: var(--art-plaque) center / 100% 100% no-repeat;
   box-shadow: 0 0 12px rgb(168 61 50 / 0.5);
 }
 
@@ -470,7 +516,7 @@ input[type="range"]::-moz-range-thumb {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("/static/assets/wukong/btn.png") center / 100% 100% no-repeat;
+  background: var(--art-btn) center / 100% 100% no-repeat;
   mix-blend-mode: overlay;
   opacity: 0.45;
   pointer-events: none;
@@ -481,7 +527,7 @@ input[type="range"]::-moz-range-thumb {
 }
 .btn:active { transform: translateY(1px); }
 .btn--gold:hover::after {
-  background-image: url("/static/assets/wukong/btn-hover.png");
+  background-image: var(--art-btn-hov);
   opacity: 0.35;
 }
 
@@ -903,7 +949,7 @@ body.home { display: grid; place-items: center; }
   z-index: 1;
   width: clamp(180px, 17vw, 320px);
   aspect-ratio: 838 / 550;
-  background: url("/static/assets/wukong/logo-wordmark.png") center / contain no-repeat;
+  background: var(--art-wordmark) center / contain no-repeat;
   transform: translateY(-50%);
   opacity: 0.14;
   filter: grayscale(1) contrast(1.1);
@@ -923,7 +969,7 @@ body.home { display: grid; place-items: center; }
   }
   .wallpaper__video { display: none; }
   .wallpaper {
-    background: url("/static/assets/wukong/wallpaper-poster.jpg") center / cover no-repeat;
+    background: var(--art-poster) center / cover no-repeat;
   }
 }
 
