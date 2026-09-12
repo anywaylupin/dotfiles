@@ -1,0 +1,116 @@
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">Keybinds</h1>
+    <p class="page-head__sub">
+      Click a combo and hold the keys you want. Writes <code>hypr/keybinds.lua</code>,
+      verifies it, then reloads the running session.
+    </p>
+  </div>
+  <a class="btn btn--ghost" href="/hypr">&lsaquo; Settings</a>
+</header>
+
+<% if load_error then %>
+  <div class="flash flash--bad"><strong>Could not read keybinds.lua.</strong> <%= load_error %></div>
+<% end %>
+<% if error_message then %>
+  <div class="flash flash--bad"><pre><%= error_message %></pre></div>
+<% end %>
+<% if notice then %>
+  <div class="flash flash--good">
+    <%= notice %>
+    <% if backup then %><span class="flash__aside">previous version kept at <code><%= backup %></code></span><% end %>
+  </div>
+<% end %>
+<% if not live then %>
+  <div class="flash">Hyprland is not running. Changes are saved and apply on next start.</div>
+<% end %>
+
+<form method="post" action="/hypr/binds/save" class="form" <%= demo and "inert" or "" %> id="binds-form">
+  <input type="hidden" name="csrf_token" value="<%= csrf_token %>">
+  <% --[[ Set by the Save button when the user chooses to keep duplicates. ]] %>
+  <input type="hidden" name="accept_conflicts" id="accept-conflicts" value="<%= pending_conflicts and "1" or "0" %>">
+
+  <div class="toolbar">
+    <label class="search">
+      <span class="search__glyph" aria-hidden="true">⌕</span>
+      <input type="search" id="bind-search" class="search__input"
+             placeholder="Search keybinds by action, combo or id" autocomplete="off"
+             data-target=".bind-row" data-empty="#bind-empty">
+    </label>
+    <span class="toolbar__count" id="bind-count"></span>
+    <span class="toolbar__warn <%= conflict_count > 0 and "is-on" or "" %>" id="conflict-count"
+          data-count="<%= conflict_count %>">
+      <%= conflict_count %> conflicting
+    </span>
+  </div>
+
+  <div class="grid">
+  <% for _, group in ipairs(groups) do %>
+    <div class="panel bind-group">
+      <div class="panel__title"><%= group.title %></div>
+      <div class="panel__body">
+        <% for _, entry in ipairs(group.entries) do %>
+          <%
+            local err = field_errors and field_errors[entry.id]
+            local clash = conflicts[entry.id]
+          %>
+          <div class="bind-row <%= err and "is-bad" or "" %> <%= clash and "is-clashing" or "" %>"
+               data-search="<%= (entry.desc or "") .. " " .. entry.combo .. " " .. entry.id %>">
+            <div class="bind-row__what">
+              <span class="bind-row__desc"><%= entry.desc %></span>
+              <span class="bind-row__id mono"><%= entry.id %></span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-<%= entry.id %>"
+                      aria-label="Change the combo for <%= entry.desc %>">
+                <span class="combo__text"><%= entry.combo %></span>
+              </button>
+              <input type="hidden" id="combo-<%= entry.id %>" name="combo.<%= entry.id %>" value="<%= entry.combo %>">
+              <button type="button" class="combo__reset" data-reset="combo-<%= entry.id %>"
+                      data-original="<%= entry.combo %>" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <% if entry.locked then %><span class="pill" title="Fires while the screen is locked">locked</span><% end %>
+              <% if entry.repeating then %><span class="pill" title="Fires while held">repeat</span><% end %>
+              <% if entry.mouse then %><span class="pill" title="Hold to drag">mouse</span><% end %>
+            </div>
+
+            <% if err then %><p class="bind-row__err"><%= err %></p><% end %>
+            <% if clash then %>
+              <p class="bind-row__warn">
+                <strong><%= clash.combo %></strong> is also bound to
+                <%= table.concat(clash.others, ", ") %>.
+                Hyprland keeps the last one registered.
+              </p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+
+  <p class="empty" id="bind-empty" hidden>Nothing matches that search.</p>
+
+  <% if demo then %>
+    <p class="empty">Editing is disabled in the demo. Search and browsing work.</p>
+  <% else %>
+  <div class="actions">
+    <button type="submit" class="btn btn--gold" id="binds-save">Save &amp; apply</button>
+    <a href="/hypr/binds" class="btn btn--ghost">Discard</a>
+    <span class="actions__note" id="dirty-note" hidden>unsaved changes</span>
+  </div>
+  <% end %>
+</form>
+
+<div class="capture" id="capture" hidden>
+  <div class="capture__box">
+    <p class="capture__label">Hold the keys</p>
+    <p class="capture__combo mono" id="capture-combo">...</p>
+    <p class="capture__hint">
+      Release to accept &middot; <kbd>Esc</kbd> cancels &middot; <kbd>Backspace</kbd> clears
+    </p>
+  </div>
+</div>

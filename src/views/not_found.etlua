@@ -1,0 +1,8 @@
+
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">404</h1>
+    <p class="page-head__sub">Nothing is mounted at <code><%= current_path %></code>.</p>
+  </div>
+  <a class="btn btn--ghost" href="/">&lsaquo; Overview</a>
+</header>

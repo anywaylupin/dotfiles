@@ -1,0 +1,40 @@
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">Resources</h1>
+    <p class="page-head__sub">
+      Documentation, tools and sources this config is built on. Defined in
+      <code>src/lib/references.lua</code>.
+    </p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <label class="search">
+    <span class="search__glyph" aria-hidden="true">⌕</span>
+    <input type="search" id="resource-search" class="search__input"
+           placeholder="Search resources" autocomplete="off"
+           data-target=".refs__item" data-empty="#resource-empty">
+  </label>
+  <span class="toolbar__count" id="resource-count"></span>
+</div>
+
+<div class="grid">
+  <% for _, group in ipairs(references) do %>
+    <div class="panel">
+      <div class="panel__title"><%= group.title %></div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          <% for _, link in ipairs(group.links) do %>
+            <li class="refs__item" data-search="<%= link.label .. " " .. group.title .. " " .. (link.note or "") .. " " .. link.url %>">
+              <a href="<%= link.url %>" target="_blank" rel="noreferrer noopener"><%= link.label %></a>
+              <% if link.note then %><span class="refs__note"><%= link.note %></span><% end %>
+              <span class="refs__host mono"><%= link.url:match("^https?://([^/]+)") or "" %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<p class="empty" id="resource-empty" hidden>Nothing matches that search.</p>

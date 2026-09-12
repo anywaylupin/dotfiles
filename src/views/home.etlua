@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="wukong">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>arch config</title>
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  <link rel="preload" href="/static/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/wukong.css?v=<%= asset_v %>">
+</head>
+<body class="home <%= wallpaper and "has-wallpaper" or "" %> <%= demo and "is-demo" or "" %>">
+
+  <% if wallpaper then %>
+    <% --[[ Muted and decorative, so it is hidden from assistive tech and
+            replaced by its poster frame under reduced-motion. ]] %>
+    <div class="wallpaper" aria-hidden="true">
+      <video class="wallpaper__video" autoplay muted loop playsinline preload="auto"
+             poster="/static/assets/wukong/wallpaper-poster.jpg">
+        <source src="/static/assets/live-wallpaper-4k.webm" type="video/webm">
+      </video>
+      <div class="wallpaper__veil"></div>
+    </div>
+  <% end %>
+
+  <% if demo then %>
+    <div class="demo-bar">
+      <strong>Read-only demo.</strong>
+      A static snapshot - there is no compositor behind it, so editing is off.
+      Run it locally to change anything.
+    </div>
+  <% end %>
+
+  <main class="hero">
+    <div class="hero__head">
+      <h1 class="hero__title">arch<span class="brand__thin">config</span></h1>
+      <p class="hero__sub">
+        <%= system.distro or "Linux" %>
+        <% if system.product then %>on <%= system.product %><% end %>
+        <% if summary.running then %>
+          &middot; hyprland <%= summary.version or "" %> running
+        <% else %>
+          &middot; <span class="hero__warn">hyprland not running</span>
+        <% end %>
+      </p>
+    </div>
+
+    <nav class="hero__grid">
+      <% for _, item in ipairs(menu) do %>
+        <a class="tile" href="<%= item.path %>">
+          <span class="tile__glyph" aria-hidden="true"><%= item.glyph %></span>
+          <span class="tile__label"><%= item.label %></span>
+          <span class="tile__blurb"><%= item.blurb %></span>
+        </a>
+      <% end %>
+    </nav>
+
+    <dl class="hero__stats">
+      <% if system.uptime then %><div class="stat"><dt>Uptime</dt><dd><%= system.uptime %></dd></div><% end %>
+      <% if system.mem_percent then %>
+        <div class="stat"><dt>Memory</dt><dd><%= system.mem_percent %><span class="stat__unit">%</span></dd></div>
+      <% end %>
+      <% if system.temp then %>
+        <div class="stat"><dt>Temp</dt><dd><%= system.temp.celsius %><span class="stat__unit">&deg;C</span></dd></div>
+      <% end %>
+      <% if system.battery then %>
+        <div class="stat"><dt>Battery</dt><dd><%= system.battery.percent %><span class="stat__unit">%</span></dd></div>
+      <% end %>
+      <% if summary.running then %>
+        <div class="stat"><dt>Windows</dt><dd><%= summary.clients %></dd></div>
+      <% end %>
+    </dl>
+  </main>
+
+  <div class="watermark" aria-hidden="true"></div>
+</body>
+</html>

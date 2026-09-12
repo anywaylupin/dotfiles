@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="wukong">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page_title and (page_title .. " · arch config") or "arch config" %></title>
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  <% --[[ Preloaded so the display serif is ready before first paint. Without
+          this the fallback serif renders at different metrics and the headings
+          visibly resize when the webfont lands. ]] %>
+  <link rel="preload" href="/static/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/wukong.css?v=<%= asset_v %>">
+</head>
+<body class="shell <%= demo and "is-demo" or "" %>">
+
+  <div class="scroll-grain" aria-hidden="true"></div>
+
+  <% if demo then %>
+    <div class="demo-bar">
+      <strong>Read-only demo.</strong>
+      A static snapshot - there is no compositor behind it, so editing is off.
+      Run it locally to change anything.
+    </div>
+  <% end %>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand__text">arch<span class="brand__thin">config</span></span>
+    </a>
+
+    <nav class="topnav">
+      <% for _, item in ipairs(menu) do %>
+        <a class="topnav__item <%= current_path == item.path and "is-active" or "" %>"
+           href="<%= item.path %>">
+          <span class="topnav__glyph" aria-hidden="true"><%= item.glyph %></span>
+          <%= item.label %>
+        </a>
+      <% end %>
+    </nav>
+  </header>
+
+  <main class="stage">
+    <%- content_for("inner") %>
+  </main>
+
+  <script src="/static/js/app.js?v=<%= asset_v %>" defer></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">System</h1>
+    <p class="page-head__sub">
+      <%= system.distro or "Linux" %> on
+      <%= system.product and (system.vendor and (system.vendor:gsub(" Co%., Ltd%.$", "") .. " " .. system.product) or system.product) or "this machine" %>.
+      Read live from <code>/proc</code>, <code>/sys</code> and <code>hyprctl</code>.
+    </p>
+  </div>
+</header>
+
+<div class="grid">
+
+  <div class="panel">
+    <div class="panel__title">Compositor</div>
+    <div class="panel__body">
+      <% if summary.running then %>
+        <dl class="stats">
+          <div class="stat"><dt>Status</dt><dd class="stat--live">running</dd></div>
+          <div class="stat"><dt>Version</dt><dd><%= summary.version or "unknown" %></dd></div>
+          <div class="stat"><dt>Windows</dt><dd><%= summary.clients %></dd></div>
+        </dl>
+        <dl class="spec">
+          <div class="spec__row"><dt>Monitors</dt><dd><%= summary.monitors %></dd></div>
+          <div class="spec__row"><dt>Workspaces</dt><dd><%= summary.workspaces %></dd></div>
+        </dl>
+      <% else %>
+        <p class="empty">Hyprland is not running. Settings can still be edited -
+        they apply the next time it starts.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__title">Session</div>
+    <div class="panel__body">
+      <dl class="stats">
+        <% if system.uptime then %><div class="stat"><dt>Uptime</dt><dd><%= system.uptime %></dd></div><% end %>
+        <% if system.mem_percent then %>
+          <div class="stat"><dt>Memory</dt><dd><%= system.mem_percent %><span class="stat__unit">%</span></dd></div>
+        <% end %>
+        <% if system.temp then %>
+          <div class="stat"><dt>Temp</dt><dd><%= system.temp.celsius %><span class="stat__unit">&deg;C</span></dd></div>
+        <% end %>
+      </dl>
+      <dl class="spec">
+        <% if system.distro then %><div class="spec__row"><dt>Distro</dt><dd><%= system.distro %></dd></div><% end %>
+        <% if system.kernel then %><div class="spec__row"><dt>Kernel</dt><dd class="mono"><%= system.kernel %></dd></div><% end %>
+        <% if system.load then %>
+          <div class="spec__row"><dt>Load</dt><dd class="mono"><%= system.load %><span class="dim"> &nbsp;1m 5m 15m</span></dd></div>
+        <% end %>
+        <% if system.mem_used then %>
+          <div class="spec__row"><dt>Memory</dt><dd><%= system.mem_used %> of <%= system.mem_total %><% if system.swap_total then %><span class="dim"> &nbsp;+ <%= system.swap_total %> swap</span><% end %></dd></div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel__title">Hardware</div>
+    <div class="panel__body">
+      <dl class="spec">
+        <% if system.vendor or system.product then %>
+          <div class="spec__row"><dt>Machine</dt>
+            <dd><%= system.product or "?" %><% if system.vendor then %><span class="dim"> &nbsp;<%= system.vendor %></span><% end %></dd></div>
+        <% end %>
+        <% if system.board then %><div class="spec__row"><dt>Board</dt><dd class="mono"><%= system.board %></dd></div><% end %>
+        <% if system.cpu then %>
+          <div class="spec__row"><dt>CPU</dt>
+            <dd><%= system.cpu %><% if system.threads then %><span class="dim"> &nbsp;<%= system.threads %> threads</span><% end %></dd></div>
+        <% end %>
+        <% if system.gpu then %><div class="spec__row"><dt>GPU</dt><dd><%= system.gpu %></dd></div><% end %>
+        <% if system.temp then %>
+          <div class="spec__row"><dt>Sensor</dt><dd><%= system.temp.celsius %> &deg;C<% if system.temp.zone then %><span class="dim"> &nbsp;<%= system.temp.zone %></span><% end %></dd></div>
+        <% end %>
+        <% if system.battery then %>
+          <div class="spec__row"><dt>Battery</dt>
+            <dd><%= system.battery.percent %>% <span class="dim"><%= (system.battery.status or ""):lower() %></span><%
+              if system.battery.health then %><span class="dim"> &nbsp;<%= system.battery.health %>% of design</span><% end %></dd></div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+  <% if summary.running and #(summary.monitor_list or {}) > 0 then %>
+    <div class="panel">
+      <div class="panel__title">Monitors</div>
+      <div class="panel__body">
+        <table class="table">
+          <thead><tr><th>Output</th><th>Mode</th><th>Position</th><th>Scale</th><th>Workspace</th></tr></thead>
+          <tbody>
+            <% for _, m in ipairs(summary.monitor_list) do %>
+              <tr>
+                <td class="mono"><%= m.name %><% if m.focused then %> <span class="pill">focused</span><% end %></td>
+                <td class="mono"><%= string.format("%dx%d@%.2f", m.width or 0, m.height or 0, m.refreshRate or 0) %></td>
+                <td class="mono"><%= (m.x or 0) .. "," .. (m.y or 0) %></td>
+                <td class="mono"><%= m.scale or 1 %></td>
+                <td class="mono"><%= m.activeWorkspace and m.activeWorkspace.name or "-" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+  <% if #system.disks > 0 then %>
+    <div class="panel panel--wide">
+      <div class="panel__title">Storage</div>
+      <div class="panel__body">
+        <table class="table">
+          <thead><tr><th>Mount</th><th>Used</th><th>Size</th><th>Full</th></tr></thead>
+          <tbody>
+            <% for _, d in ipairs(system.disks) do %>
+              <tr>
+                <td class="mono"><%= d.mount %></td>
+                <td class="mono"><%= d.used %></td>
+                <td class="mono"><%= d.size %></td>
+                <td>
+                  <div class="meter" title="<%= d.percent %>">
+                    <span class="meter__fill" style="width: <%= d.percent %>"></span>
+                  </div>
+                  <span class="mono dim"><%= d.percent %></span>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+</div>

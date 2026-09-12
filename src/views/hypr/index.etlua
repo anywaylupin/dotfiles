@@ -1,0 +1,114 @@
+
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">Hyprland</h1>
+    <p class="page-head__sub">
+      Writes <code>hypr/settings.lua</code>, verifies it through
+      <code>Hyprland --verify-config</code>, then reloads the running session.
+    </p>
+  </div>
+</header>
+
+<% if load_error then %>
+  <div class="flash flash--bad"><strong>Could not read settings.lua.</strong> <%= load_error %></div>
+<% end %>
+
+<% if error_message then %>
+  <div class="flash flash--bad"><pre><%= error_message %></pre></div>
+<% end %>
+
+<% if notice then %>
+  <div class="flash flash--good">
+    <%= notice %>
+    <% if backup then %><span class="flash__aside">previous version kept at <code><%= backup %></code></span><% end %>
+  </div>
+<% end %>
+
+<form method="post" action="/hypr/save" class="form" <%= demo and "inert" or "" %>>
+  <input type="hidden" name="csrf_token" value="<%= csrf_token %>">
+
+  <div class="toolbar">
+    <label class="search">
+      <span class="search__glyph" aria-hidden="true">⌕</span>
+      <input type="search" id="field-search" class="search__input"
+             placeholder="Search settings by name or section" autocomplete="off"
+             data-target=".field" data-empty="#field-empty">
+    </label>
+    <span class="toolbar__count" id="field-count"></span>
+    <a class="toolbar__link" href="/hypr/binds">Keybinds &rsaquo;</a>
+  </div>
+  <div class="grid">
+  <% for _, group in ipairs(schema) do %>
+    <div class="panel">
+      <div class="panel__title"><%= group.title %></div>
+      <div class="panel__body">
+        <% if group.blurb then %><p class="panel__blurb"><%= group.blurb %></p><% end %>
+
+        <% for _, field in ipairs(group.fields) do %>
+          <%
+            local name = group.section .. "." .. field.key
+            local current
+            if raw_values then
+              current = settings[name]
+            else
+              current = (settings[group.section] or {})[field.key]
+            end
+            local err = field_errors and field_errors[name]
+          %>
+          <div class="field <%= err and "field--bad" or "" %>"
+               data-search="<%= field.label .. " " .. group.title .. " " .. name .. " " .. (field.help or "") %>">
+            <label class="field__label" for="<%= name %>"><%= field.label %></label>
+
+            <div class="field__control">
+              <% if field.type == "bool" then %>
+                <input type="hidden" name="<%= name %>" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="<%= name %>" name="<%= name %>" value="1"
+                         <%= (current == true or current == "1" or current == "true") and "checked" or "" %>>
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              <% elseif field.type == "enum" then %>
+                <select id="<%= name %>" name="<%= name %>" class="select">
+                  <% for _, opt in ipairs(field.options) do %>
+                    <option value="<%= opt.value %>"
+                      <%= tostring(current) == tostring(opt.value) and "selected" or "" %>><%= opt.label %></option>
+                  <% end %>
+                </select>
+
+              <% elseif field.type == "int" or field.type == "float" then %>
+                <div class="slider">
+                  <input type="range" id="<%= name %>" name="<%= name %>"
+                         min="<%= field.min %>" max="<%= field.max %>"
+                         step="<%= field.step or 1 %>" value="<%= current %>"
+                         data-readout="<%= name %>-out">
+                  <output id="<%= name %>-out" class="slider__out mono"><%= current %></output>
+                </div>
+
+              <% else %>
+                <input type="text" id="<%= name %>" name="<%= name %>" class="input mono"
+                       value="<%= current %>">
+              <% end %>
+
+              <% if field.help then %><p class="field__help"><%= field.help %></p><% end %>
+              <% if err then %><p class="field__err"><%= err %></p><% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+
+  <p class="empty" id="field-empty" hidden>Nothing matches that search.</p>
+
+  <% if demo then %>
+    <p class="empty">Editing is disabled in the demo. Search and browsing work.</p>
+  <% else %>
+  <div class="actions">
+    <button type="submit" class="btn btn--gold">Save &amp; apply</button>
+    <a href="/hypr" class="btn btn--ghost">Discard</a>
+    <span class="actions__note" id="dirty-note" hidden>unsaved changes</span>
+  </div>
+  <% end %>
+</form>

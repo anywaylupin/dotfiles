@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# ╭────────────────────────────────────────────────────────────────────────────╮
+# │  DEV SERVER                                                                │
+# ╰────────────────────────────────────────────────────────────────────────────╯
+#
+# Runs the Lapis app in src/ against the project-local toolchain in .tools/.
+# No system Lua, no root, nothing installed outside this repo.
+#
+#   ./.tools/build.sh          build the toolchain (once)
+#   src/static/assets/fetch.sh fetch the artwork (once)
+#   ./dev                      serve http://127.0.0.1:8080
+#   ./dev production           same, with code caching on
+#   ./dev stop                 stop whatever is listening on the port
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TOOLS="$ROOT/.tools/local"
+PORT=8080
+
+# Find the listener by PORT, not by command-line pattern: a pgrep -f pattern
+# also matches the shell running it, which makes kill suicidal.
+listener() {
+  ss -lptnH "sport = :$PORT" 2>/dev/null | grep -oE 'pid=[0-9]+' | head -1 | cut -d= -f2
+}
+
+if [[ "${1:-}" == "stop" ]]; then
+  pid="$(listener)"
+  if [[ -n "$pid" ]]; then kill "$pid" && echo "stopped pid $pid"; else echo "nothing on :$PORT"; fi
+  exit 0
+fi
+
+[[ -x "$TOOLS/bin/lapis" ]] || { echo "Toolchain missing. Run ./.tools/build.sh first." >&2; exit 1; }
+
+if [[ -n "$(listener)" ]]; then
+  echo "Port $PORT is already in use - ./dev stop first." >&2
+  exit 1
+fi
+
+export DOTFILES_ROOT="$ROOT"
+export PATH="$TOOLS/bin:$PATH"
+
+# luarocks path exports LUA_PATH/LUA_CPATH for the local rock tree. Prepend the
+# repo root, so require("hypr.*") reaches the config, and src/, so require("lib.*")
+# and require("routes.*") reach the app.
+eval "$("$TOOLS/bin/luarocks" path)"
+export LUA_PATH="$ROOT/?.lua;$ROOT/?/init.lua;$ROOT/src/?.lua;$ROOT/src/?/init.lua;$LUA_PATH"
+
+# Lapis resolves app.lua, config.lua and views/ relative to cwd.
+cd "$ROOT/src"
+exec "$TOOLS/bin/lapis" server "${1:-development}"
