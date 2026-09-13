@@ -1,0 +1,43 @@
+/* ── Centre island: workspaces and the focused window ─────────────────────── */
+
+/* ── Centre: workspaces and the focused window ───────────────────────────── */
+
+#custom-ws1, #custom-ws2, #custom-ws3, #custom-ws4, #custom-ws5,
+#custom-ws6, #custom-ws7, #custom-ws8, #custom-ws9, #custom-ws10 {
+  min-width: 0;
+  padding: 0 7px;
+  margin: 5px 2px;
+  border-radius: 8px;
+  color: alpha(@base04, 0.7);
+  background-color: transparent;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+/* Occupied but not focused. Empty ones print nothing and waybar hides them. */
+#custom-ws1.occupied, #custom-ws2.occupied, #custom-ws3.occupied,
+#custom-ws4.occupied, #custom-ws5.occupied, #custom-ws6.occupied,
+#custom-ws7.occupied, #custom-ws8.occupied, #custom-ws9.occupied,
+#custom-ws10.occupied { color: @base04; }
+
+
+/* Focused. Magenta is Oxocarbon's signature and this is the one place it sits
+   as a solid fill. */
+#custom-ws1.active, #custom-ws2.active, #custom-ws3.active, #custom-ws4.active,
+#custom-ws5.active, #custom-ws6.active, #custom-ws7.active, #custom-ws8.active,
+#custom-ws9.active, #custom-ws10.active {
+  color: @base06;
+  background-color: @base0A;
+}
+
+#submap {
+  padding: 0 10px;
+  color: @base00;
+  background-color: @base0E;
+}
+
+#window {
+  padding: 0 12px 0 8px;
+  color: @base04;
+  font-weight: 500;
+}
+window#waybar.empty #window { background: transparent; }

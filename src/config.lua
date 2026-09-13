@@ -13,9 +13,13 @@ local config = require("lapis.config")
 -- Per-install, generated on first run. See lib/secret.lua.
 local secret = require("lib.secret")
 
+-- 1024 is the lowest port bindable without root: everything below it is
+-- privileged and would need CAP_NET_BIND_SERVICE or a sysctl change, which is
+-- not worth it for a local tool.
+--
 -- tools/export-static.sh runs a second instance on another port so it does not
 -- fight a dev server you already have open.
-local port = tonumber(os.getenv("ARCHCONFIG_PORT")) or 8080
+local port = tonumber(os.getenv("ARCHCONFIG_PORT")) or 1024
 
 config("development", {
   server      = "cqueues",

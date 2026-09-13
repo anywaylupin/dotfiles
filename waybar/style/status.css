@@ -1,0 +1,60 @@
+/* ── Right island: status ─────────────────────────────────────────────────── */
+
+/* ── Right: status ────────────────────────────────────────────────────────── */
+
+#mpris, #custom-ai, #custom-im, #wireplumber, #backlight, #battery,
+#bluetooth, #network, #tray {
+  padding: 0 11px;
+  color: @base04;
+  background-repeat: no-repeat;
+  background-position: 9px center;
+  background-size: 16px 16px;
+  transition: background-size 170ms ease, color 170ms ease;
+}
+
+#wireplumber, #backlight, #battery { padding-left: 30px; }
+#network { padding-left: 26px; padding-right: 6px; }
+
+#wireplumber { background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/volume-2.svg"); color: @base09; }
+#wireplumber.muted {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/volume-x.svg");
+  color: alpha(@base04, 0.65);
+}
+#backlight { background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/sun.svg"); color: @base0F; }
+#battery   { background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/battery-medium.svg"); color: @base04; }
+#battery.charging {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/battery-charging.svg");
+  color: @base0D;
+}
+#battery.warning  { color: @base0C; }
+#battery.critical { color: @base0A; animation: pulse 1.1s ease-in-out infinite; }
+#network   { background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/wifi.svg"); color: @base0B; }
+#network.disconnected {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/lucide/wifi-off.svg");
+  color: @base0A;
+}
+
+
+@keyframes pulse {
+  from { opacity: 1; }
+  50%  { opacity: 0.5; }
+  to   { opacity: 1; }
+}
+
+#custom-im { padding: 0 12px; color: @base04; background-image: none; letter-spacing: 1px; font-weight: 700; }
+#custom-im.vietnamese { color: @base0E; }
+
+#mpris { padding: 0 12px; color: alpha(@base04, 0.75); background-image: none; }
+#mpris.playing  { color: @base0D; }
+#mpris.paused { color: alpha(@base04, 0.6); }
+#mpris.stopped  { color: transparent; padding: 0; }
+
+/* Bluetooth. Icon only, like the network module beside it. */
+#bluetooth {
+  padding-left: 26px;
+  padding-right: 6px;
+  background-image: url("../icons/lucide/bluetooth.svg");
+  color: @base09;
+}
+#bluetooth.disabled  { opacity: 0.45; }
+#bluetooth.connected { color: @base0B; }

@@ -1,0 +1,42 @@
+<% --[[ Shared by /hypr and /hypr/binds. `preset_return` says which page to come
+        back to; `pending_preset` is set when a press needs confirming. ]] %>
+<div class="panel panel--wide">
+  <div class="panel__title">Presets</div>
+  <div class="panel__body">
+    <p class="panel__blurb">
+      A preset holds both the settings and the keybinds. Restoring one overwrites
+      both files, backs up what was there, and reloads the session.
+    </p>
+
+    <% for _, preset in ipairs(presets) do %>
+      <%
+        local armed = pending_preset == preset.slug
+        local live  = preset.is_current
+      %>
+      <div class="preset <%= armed and "is-armed" or "" %>">
+        <div class="preset__what">
+          <span class="preset__name"><%= preset.name %></span>
+          <% if live then %><span class="pill">current</span><% end %>
+          <span class="preset__meta"><%= preset.description or "" %>
+            <span class="dim">&middot; <%= preset.binds_count %> binds</span></span>
+        </div>
+
+        <form method="post" action="/hypr/preset" class="preset__action">
+          <input type="hidden" name="csrf_token" value="<%= csrf_token %>">
+          <input type="hidden" name="preset" value="<%= preset.slug %>">
+          <input type="hidden" name="return" value="<%= preset_return %>">
+          <input type="hidden" name="confirm" value="<%= armed and "1" or "0" %>">
+          <button type="submit" class="btn <%= armed and "btn--danger" or "btn--ghost" %>"
+                  <%= (live and not armed) and "disabled" or "" %>>
+            <%= armed and "Confirm restore" or (live and "In use" or "Restore") %>
+          </button>
+        </form>
+      </div>
+    <% end %>
+
+    <p class="preset__hint">
+      Snapshot the current configuration as a new preset with
+      <code>tools/save-preset.sh &lt;name&gt;</code>.
+    </p>
+  </div>
+</div>

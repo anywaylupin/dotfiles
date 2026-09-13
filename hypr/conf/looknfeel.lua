@@ -20,9 +20,11 @@ hl.config({
     resize_on_border = s.general.resize_on_border,  -- (ui) drag borders to resize
     layout           = s.general.layout,            -- (ui) dwindle | master | scrolling
 
+    -- Oxocarbon: magenta into purple for focus, base02 for everything else.
+    -- https://github.com/nyoom-engineering/base16-oxocarbon
     col = {
-      active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-      inactive_border = "rgba(595959aa)",
+      active_border   = { colors = { "rgba(ee5396ff)", "rgba(be95ffff)" }, angle = 45 },
+      inactive_border = "rgba(393939aa)",
     },
 
     allow_tearing = false,   -- read the wiki's Tearing page before enabling
@@ -45,7 +47,7 @@ hl.config({
       enabled      = s.shadow.enabled,   -- (ui)
       range        = s.shadow.range,     -- (ui)
       render_power = 3,
-      color        = 0xee1a1a1a,
+      color        = 0xee161616,
     },
   },
 
@@ -55,7 +57,17 @@ hl.config({
   },
 
   misc = {
-    force_default_wallpaper = -1,   -- 0 or 1 disables the anime mascots
+    font_family             = s.misc.font_family,   -- (ui)
+    force_default_wallpaper = -1,                   -- 0 or 1 disables the anime mascots
+  },
+
+  -- The tab strip on grouped windows is the one piece of chrome Hyprland draws
+  -- with text, so it follows the same font.
+  group = {
+    groupbar = {
+      font_family = s.misc.font_family,             -- (ui)
+      font_size   = 11,
+    },
   },
 
   ecosystem = {

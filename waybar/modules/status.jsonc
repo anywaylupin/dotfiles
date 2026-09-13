@@ -1,0 +1,81 @@
+// ── status ──
+// Right island. Session and hardware status.
+{
+  "mpris": {
+    "format": "{title}",
+    "format-paused": "{title}",
+    "tooltip-format": "{player}\n{title}\n{artist}\n{album}",
+    "max-length": 42,
+    "ellipsis": "...",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-scroll-up": "playerctl position 5+",
+    "on-scroll-down": "playerctl position 5-",
+    "player-icons": {
+      "default": "",
+      "firefox": "",
+      "spotify": ""
+    },
+    "status-icons": {
+      "playing": "",
+      "paused": ""
+    }
+  },
+  "custom/ai": {
+    "format": "{}",
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ai-usage.py",
+    "return-type": "json",
+    "interval": 60,
+    "tooltip": false
+  },
+  "custom/im": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/input-method.sh",
+    "return-type": "json",
+    "interval": 2,
+    "tooltip": true,
+    "on-click": "fcitx5-remote -t"
+  },
+  "wireplumber": {
+    "format": "{volume}%",
+    "format-muted": "muted",
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "scroll-step": 5,
+    "tooltip-format": "{node_name}\\n{volume}%"
+  },
+  "backlight": {
+    "format": "{percent}%",
+    "tooltip-format": "brightness {percent}%\nclick: night light on/off\nright click: reset to 6500K",
+    "on-scroll-up": "brightnessctl -e4 -n2 set 5%+",
+    "on-scroll-down": "brightnessctl -e4 -n2 set 5%-",
+    "on-click": "pkill -x hyprsunset || hyprsunset --temperature 4000",
+    "on-click-right": "hyprsunset --temperature 6500"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}%",
+    "format-charging": "{capacity}%",
+    "tooltip-format": "{timeTo}\\nhealth {health}%\\ndraw {power}W"
+  },
+  "bluetooth": {
+    "format": " ",
+    "format-disabled": " ",
+    "format-connected": " ",
+    "tooltip-format": "{controller_alias}\n{num_connections} connected",
+    "tooltip-format-connected": "{device_enumerate}",
+    "on-click": "blueman-manager"
+  },
+  "network": {
+    "format-wifi": " ",
+    "format-ethernet": " ",
+    "format-disconnected": " ",
+    "tooltip-format": "{ifname}\\n{ipaddr}\\n{signalStrength}%",
+    "on-click": "nm-connection-editor",
+    "tooltip-format-wifi": "{essid}\n{ipaddr}\n{signalStrength}%",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
+    "tooltip-format-disconnected": "disconnected"
+  }
+}

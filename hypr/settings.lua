@@ -13,8 +13,8 @@
 return {
   general = {
     border_size      = 2,
-    gaps_in          = 6,
-    gaps_out         = 20,
+    gaps_in          = 2,
+    gaps_out         = 6,
     layout           = "dwindle",
     resize_on_border = false,
   },
@@ -39,6 +39,10 @@ return {
 
   animations = {
     enabled = true,
+  },
+
+  misc = {
+    font_family = "Cascadia Code",
   },
 
   input = {

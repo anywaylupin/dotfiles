@@ -1,0 +1,23 @@
+/* ── Oxocarbon palette ────────────────────────────────────────────────────────
+   Base16 names kept verbatim so they can be diffed against the source:
+   https://github.com/nyoom-engineering/base16-oxocarbon
+   @clawd is Claude's orange and is the one colour here that is not Oxocarbon. */
+
+@define-color base00 #161616;   /* background            */
+@define-color base01 #262626;   /* raised surface        */
+@define-color base02 #393939;   /* borders, rules        */
+@define-color base03 #525252;   /* dim text              */
+@define-color base04 #dde1e6;   /* body text             */
+@define-color base05 #f2f4f8;   /* bright text           */
+@define-color base06 #ffffff;
+@define-color base07 #08bdba;   /* teal                  */
+@define-color base08 #3ddbd9;   /* cyan                  */
+@define-color base09 #78a9ff;   /* blue                  */
+@define-color base0A #ee5396;   /* magenta - the accent  */
+@define-color base0B #33b1ff;   /* light blue            */
+@define-color base0C #ff7eb6;   /* pink                  */
+@define-color base0D #42be65;   /* green                 */
+@define-color base0E #be95ff;   /* purple                */
+@define-color base0F #82cfff;   /* pale blue             */
+
+@define-color clawd  #D97757;   /* Claude's orange, and only Clawd's */

@@ -11,3 +11,4 @@
 nginx.conf.compiled
 logs/
 .vercel
+__pycache__/

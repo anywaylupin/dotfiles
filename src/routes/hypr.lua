@@ -19,6 +19,7 @@ local csrf       = require("lapis.csrf")
 local schema     = require("lib.hypr.schema")
 local store      = require("lib.hypr.store")
 local binds      = require("lib.hypr.binds")
+local presets    = require("lib.hypr.presets")
 local hyprctl    = require("lib.hypr.hyprctl")
 
 local app = lapis.Application()
@@ -37,6 +38,10 @@ local function load_settings(self)
   self.settings   = settings
   self.schema     = schema
   self.summary    = hyprctl.summary()
+  self.presets    = presets.list()
+  for _, preset in ipairs(self.presets) do
+    preset.is_current = presets.matches(preset)
+  end
   return settings
 end
 
@@ -103,6 +108,11 @@ local function load_binds(self, entries, conflicts)
   self.conflicts  = conflicts or binds.conflicts(entries)
   self.live       = hyprctl.running()
 
+  self.presets = presets.list()
+  for _, preset in ipairs(self.presets) do
+    preset.is_current = presets.matches(preset)
+  end
+
   local count = 0
   for _ in pairs(self.conflicts) do count = count + 1 end
   self.conflict_count = count
@@ -159,6 +169,56 @@ app:match("binds_save", "/binds/save", respond_to({
     self.notice = saved.message
     self.backup = saved.backup
     return { render = "hypr.binds" }
+  end,
+}))
+
+-- ── presets ─────────────────────────────────────────────────────────────────
+--
+-- Restoring overwrites BOTH settings.lua and keybinds.lua, so it is a two-press
+-- action: the first press arms it, matching how conflicts are confirmed.
+
+app:match("preset", "/preset", respond_to({
+  GET = function() return { redirect_to = "/hypr" } end,
+
+  POST = function(self)
+    local back = self.params["return"] == "binds" and "/hypr/binds" or "/hypr"
+    local render = back == "/hypr/binds" and "hypr.binds" or "hypr.index"
+    local load = back == "/hypr/binds" and load_binds or load_settings
+
+    local token_ok, token_err = csrf.validate_token(self)
+    if not token_ok then
+      load(self)
+      self.error_message = "Rejected: " .. tostring(token_err or "bad CSRF token") ..
+        ".\nReload the page and try again."
+      return { render = render, status = 403 }
+    end
+
+    local preset, err = presets.get(self.params.preset)
+    if not preset then
+      load(self)
+      self.error_message = tostring(err)
+      return { render = render, status = 400 }
+    end
+
+    if self.params.confirm ~= "1" then
+      load(self)
+      self.pending_preset = preset.slug
+      self.error_message = ("Restoring %q overwrites your settings AND keybinds. ")
+        :format(preset.name) .. "Press again to confirm."
+      return { render = render, status = 409 }
+    end
+
+    local result, apply_err = presets.apply(preset)
+    if not result then
+      load(self)
+      self.error_message = apply_err
+      return { render = render, status = 500 }
+    end
+
+    load(self)
+    self.notice = result.message
+    self.backup = result.backup
+    return { render = render }
   end,
 }))
 

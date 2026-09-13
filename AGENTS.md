@@ -41,7 +41,7 @@ between an edit and a broken session. `./install.sh` in `hypr/` runs it too.
 dev                    start/stop the server
 src/
   app.lua              Lapis root app: mounts sub-apps, serves /static, 404
-  config.lua           Lapis config - cqueues backend, 127.0.0.1:8080
+  config.lua           Lapis config - cqueues backend, 127.0.0.1:1024
   routes/hypr.lua      the /hypr section (a standalone Lapis sub-app)
                        /, /system and /resources live in app.lua
   lib/
@@ -61,7 +61,10 @@ src/
 hypr/                  THE LIVE CONFIG - see the rule above
   settings.lua         machine-managed values
   keybinds.lua         machine-managed combos, plain data
+  presets/             snapshots of both files, applied as one action
   conf/binds/          dispatch.lua (id -> behaviour) + init.lua (the join)
+  conf/services.lua    startup processes, shared by autostart and the restart bind
+waybar/                config.jsonc + style.css, launched with -c/-s from services.lua
   conf/rules/          window and layer rules
 .tools/                vendored Lua toolchain (gitignored, built by build.sh)
 ```
@@ -70,7 +73,7 @@ hypr/                  THE LIVE CONFIG - see the rule above
 
 ```bash
 ./.tools/build.sh   # once: LuaJIT, LuaRocks, Lapis into .tools/ - no root
-./dev               # serve http://127.0.0.1:8080
+./dev               # serve http://127.0.0.1:1024
 ./dev stop          # stop it
 ```
 
@@ -172,6 +175,103 @@ Every field needs real bounds. The validator rejects the whole submission if any
 field fails, and `type = "text"` fields must carry a `pattern`: these values are
 serialized into Lua source that a compositor then executes.
 
+## Services
+
+`hypr/conf/services.lua` holds the startup processes once, used by both
+`conf/autostart.lua` and the `services.restart` dispatcher. Add a service there,
+not in either consumer.
+
+**Do not add PipeWire or WirePlumber.** They are systemd user units with socket
+activation already enabled; launching them from Hyprland races with systemd and
+produces two session managers. The file says so, and it keeps getting suggested.
+
+Every entry is guarded with `command -v`, so an uninstalled package is skipped.
+Keep that: this config is expected to load on a machine missing some tools.
+
+## Waybar
+
+`waybar/` is versioned and launched with `-c`/`-s` from `conf/services.lua`,
+which derives the repo root from `package.path` rather than hardcoding it. Do
+not move it to `~/.config/waybar`.
+
+`waybar/style.css` is **GTK CSS**. Browser CSS habits break it: no `:root`
+custom properties (use `@define-color`), no `rgb(0 0 0 / 0.5)` slash syntax (use
+`alpha(@color, 0.5)`), and selectors are widget names. It is not the same
+language as `src/static/css/wukong.css` despite sharing the palette.
+
+Waybar does not reload on config change: `SUPER + SHIFT + R`.
+
+## Waybar config
+
+Split deliberately: `waybar/config.jsonc` is machine-managed by `/waybar`,
+`waybar/modules.jsonc` is hand-written. Waybar's `include` resolves conflicts in
+favour of the **including** file, so the machine file must include the hand file
+and not the reverse. This was verified, not assumed.
+
+Waybar has no `--verify-config`, so `src/lib/waybar/store.lua` re-parses what it
+wrote and rolls back if the result is not valid JSON. Keep that check.
+
+GTK CSS traps that cost time: `font-feature-settings` takes one string
+(`"calt 1, ss01 1"`), and `@keyframes` takes `from`/`to`/single percentages, not
+the grouped `0%, 100%` selector.
+
+## hyprctl under a Lua config
+
+`hyprctl dispatch` wraps its argument in `hl.dispatch(...)`, so it needs **Lua**,
+not hyprlang:
+
+```bash
+hyprctl dispatch 'hl.dsp.focus({ workspace = 7 })'   # works
+hyprctl dispatch workspace 7                          # error near '7'
+```
+
+Every shell command in this repo that dispatches must use the Lua form. This
+also breaks waybar's built-in workspace `activate`, which sends the hyprlang
+string over the IPC socket - verified against the raw socket, not assumed. There
+is no compatibility flag in `hyprctl` and no legacy keyword in the Lua API, so
+the bar uses ten `custom/wsN` buttons that dispatch the Lua form. Do not
+"simplify" them back to `hyprland/workspaces`: clicking would stop working.
+
+## Icons on the bar
+
+Lucide SVGs for function, Mandarin only for workspace numbers. An icon a reader
+cannot decode is not an icon.
+
+librsvg renders SVG for GTK `background-image` but **ignores animation inside
+the file** - no SMIL, no CSS keyframes within an SVG. Hover and state animation
+must act on the widget (`background-size`, `background-position`, `opacity`).
+
+**Writing glyphs through a bash heredoc silently drops them.** The private-use
+codepoints came through as empty strings and the bar rendered blank labels. Emit
+them from Python by codepoint, and check coverage with
+`fc-list :charset=<hex>` before using one.
+
+## Function keys
+
+The bare F1-F12 row is intentionally unbound. Volume, media and brightness use
+the `XF86*` codes the keyboard emits. Binding bare F-keys hijacks them from
+applications, which is what the previous HyDE config did.
+
+`msi-ec` does not load on this hardware (EC firmware `14DLEMS1.105` is
+unsupported and the module takes no override), so there is no software Fn-swap
+to wire up. Fn Lock is Fn + Esc, handled by the embedded controller.
+
+## Presets
+
+A preset in `hypr/presets/` is a snapshot of both `settings.lua` and
+`keybinds.lua`. `src/lib/hypr/presets.lua` applies one.
+
+The invariant that matters: **applying is atomic across both files.** It backs
+both up, writes both, verifies once, and restores **both** on rejection. A
+half-applied preset - new keybinds against old settings - is worse than not
+applying at all, so do not split the verify or let one write succeed alone.
+
+`presets.get` rejects any slug that is not `[%w_-]+`, which is what stops a
+path-traversal slug reaching the filesystem. Keep that check.
+
+Restoring is a two-press action in the UI because it overwrites work, matching
+how keybind conflicts are confirmed.
+
 ## Safety properties worth preserving
 
 `lib/hypr/store.lua` is deliberately paranoid, in this order:
@@ -195,7 +295,7 @@ The server binds `127.0.0.1` and writes the compositor config, so two things
 matter and both are easy to break by accident:
 
 - **CSRF.** A plain form POST is not blocked by the same-origin policy, so any
-  page the user visits could POST to `127.0.0.1:8080/hypr/save` and silently
+  page the user visits could POST to `127.0.0.1:1024/hypr/save` and silently
   rewrite their config. `routes/hypr.lua` validates a `lapis.csrf` token bound
   to the session cookie. Any new route that writes must do the same.
 - **The session secret** is generated per install into `.secret` (gitignored,
@@ -206,6 +306,8 @@ matter and both are easy to break by accident:
 
 - **Never `pkill -f` a pattern that appears in your own command line.** `pkill -f 'lapis server'`
   matches the shell running it. Use `./dev stop`, which finds the listener by port.
+- **`render()` in etlua writes to the buffer and returns nil**, so `<%- render(...) %>`
+  prints a stray "nil" on the page. Use the statement form, `<% render(...) %>`.
 - **etlua has no comment tag.** `<%-- ... --%>` parses as `<%-` plus a stray `-`
   and throws. Use `<% --[[ ... ]] %>`.
 - **Variables assigned inside a view do not reach the layout.** `<% page_title = "x" %>`
@@ -264,6 +366,29 @@ Three properties of that export matter and are easy to break:
   carries `/home/<user>` and `/run/media/<user>` mount paths.
 - **The export copies all of `src/static`**, so the wallpaper, poster, favicon
   and font come from your own domain while the theme images stay hotlinked.
+
+## Theme
+
+**Oxocarbon Dark** throughout.
+
+- Palette: <https://github.com/nyoom-engineering/base16-oxocarbon>
+- Desktop theme: <https://github.com/rishav12s/Oxo-Carbon>, vendored in
+  `themes/oxo-carbon/` and installed to `~/.local/share/themes` and
+  `~/.config/Kvantum`. Standard locations on purpose: the point was to get the
+  theme without HyDE managing it, so it stays editable.
+
+The bar is a transparent tray with modules grouped into rounded islands, which
+is upstream's design (`bar-bg` is `rgba(0,0,0,0)`). Do not put a background back
+on `window#waybar`, and do not add dividers between modules.
+
+The base16 names are kept as the variable names in `waybar/style.css`
+(`@define-color base00` ...) so the palette can be checked against the source
+without translation. `src/static/css/wukong.css` keeps its older variable names
+but holds Oxocarbon values.
+
+**One exception, and it is deliberate**: Clawd keeps Claude's `#D97757`. Do not
+fold him into the palette - he is the one thing on the bar that is not
+Oxocarbon, and that is the point.
 
 ## Assets
 

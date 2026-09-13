@@ -1,0 +1,55 @@
+# Managed by the dotfiles repo.
+#
+# Ctrl+Shift cycles input methods, as asked. fcitx5 spells a modifier-only
+# hotkey by naming the side it fires on, hence Shift_L rather than Shift.
+
+[Hotkey]
+# Trigger Input Method
+TriggerKeys=
+# Enumerate when press trigger key repeatedly
+EnumerateWithTriggerKeys=True
+# Temporally switch between first and current Input Method
+AltTriggerKeys=
+# Enumerate Input Method Forward
+EnumerateForwardKeys=Control+Shift_L
+# Enumerate Input Method Backward
+EnumerateBackwardKeys=
+# Enumerate Input Method Group Forward
+EnumerateGroupForwardKeys=
+# Enumerate Input Method Group Backward
+EnumerateGroupBackwardKeys=
+
+[Hotkey/TriggerKey]
+0=Zenkaku_Hankaku
+1=Hangul
+
+# Ctrl+Shift steps forward through the group, so it rotates rather than
+# flipping between the last two.
+[Hotkey/EnumerateForwardKeys]
+0=Control+Shift_L
+
+[Hotkey/EnumerateBackwardKeys]
+0=Control+Shift+Shift_L
+
+[Hotkey/PrevPage]
+0=Up
+
+[Hotkey/NextPage]
+0=Down
+
+[Behavior]
+# Active By Default
+ActiveByDefault=False
+# Share Input State
+ShareInputState=All
+# Show preedit in application
+PreeditEnabledByDefault=True
+# Show Input Method Information when switch input method.
+# False: no floating panel on switch. That panel is what made switching look
+# delayed - the switch itself is instant, the popup was the lag you saw.
+ShowInputMethodInformation=False
+# Do not announce the method again when a window takes focus.
+ShowInputMethodInformationWhenFocusIn=False
+# Commit the switch on the first press rather than waiting to see whether you
+# are holding the chord to cycle further.
+EnumerateSkipFirst=False

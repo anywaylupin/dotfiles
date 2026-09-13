@@ -18,6 +18,7 @@
 return {
   {
     section = "general",
+    glyph   = "界",
     title   = "Layout",
     blurb   = "Gaps, borders and the tiling algorithm.",
     fields  = {
@@ -35,6 +36,7 @@ return {
   },
   {
     section = "decoration",
+    glyph   = "飾",
     title   = "Decoration",
     blurb   = "Corners and window opacity.",
     fields  = {
@@ -47,6 +49,7 @@ return {
   },
   {
     section = "blur",
+    glyph   = "霧",
     title   = "Blur",
     blurb   = "Costs GPU time; passes are more expensive than size.",
     fields  = {
@@ -57,6 +60,7 @@ return {
   },
   {
     section = "shadow",
+    glyph   = "影",
     title   = "Shadow",
     fields  = {
       { key = "enabled", label = "Enabled", type = "bool" },
@@ -65,6 +69,7 @@ return {
   },
   {
     section = "animations",
+    glyph   = "動",
     title   = "Animations",
     blurb   = "The curves and leaf tree stay in hypr/conf/animations.lua.",
     fields  = {
@@ -72,7 +77,19 @@ return {
     },
   },
   {
+    section = "misc",
+    glyph   = "字",
+    title   = "Typography",
+    blurb   = "Used by Hyprland's own surfaces: the group bar and the splash.",
+    fields  = {
+      { key = "font_family", label = "Font family", type = "text",
+        pattern = "^[%a][%w%s,_%-]*$",
+        help = "Also set in waybar/style.css, which Hyprland cannot read." },
+    },
+  },
+  {
     section = "input",
+    glyph   = "觸",
     title   = "Input",
     fields  = {
       { key = "kb_layout",    label = "Keyboard layout", type = "text", pattern = "^[%a][%a%d,_%-]*$",

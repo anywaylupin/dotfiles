@@ -40,7 +40,7 @@
   <div class="grid">
   <% for _, group in ipairs(schema) do %>
     <div class="panel">
-      <div class="panel__title"><%= group.title %></div>
+      <div class="panel__title"><% if group.glyph then %><span class="glyph" aria-hidden="true"><%= group.glyph %></span><% end %><%= group.title %></div>
       <div class="panel__body">
         <% if group.blurb then %><p class="panel__blurb"><%= group.blurb %></p><% end %>
 
@@ -112,3 +112,9 @@
   </div>
   <% end %>
 </form>
+
+<div class="grid">
+  <% render("views.hypr._presets", { presets = presets, csrf_token = csrf_token,
+        pending_preset = pending_preset, preset_return = "settings" }) %>
+</div>
+

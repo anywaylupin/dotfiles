@@ -47,7 +47,9 @@
   <div class="grid">
   <% for _, group in ipairs(groups) do %>
     <div class="panel bind-group">
-      <div class="panel__title"><%= group.title %></div>
+      <% local GROUP_GLYPH = { Window = "窗", Motion = "動", Workspaces = "界",
+       Launchers = "啟", Hardware = "器", Media = "音", Display = "明", Session = "命" } %>
+      <div class="panel__title"><span class="glyph" aria-hidden="true"><%= GROUP_GLYPH[group.title] or "·" %></span><%= group.title %></div>
       <div class="panel__body">
         <% for _, entry in ipairs(group.entries) do %>
           <%
@@ -104,6 +106,12 @@
   </div>
   <% end %>
 </form>
+
+
+<div class="grid">
+  <% render("views.hypr._presets", { presets = presets, csrf_token = csrf_token,
+        pending_preset = pending_preset, preset_return = "binds" }) %>
+</div>
 
 <div class="capture" id="capture" hidden>
   <div class="capture__box">

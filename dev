@@ -15,7 +15,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOOLS="$ROOT/.tools/local"
-PORT=8080
+PORT=1024
 
 # Find the listener by PORT, not by command-line pattern: a pgrep -f pattern
 # also matches the shell running it, which makes kill suicidal.

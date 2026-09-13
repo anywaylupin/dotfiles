@@ -1,0 +1,22 @@
+/* ╭────────────────────────────────────────────────────────────────────────────╮
+   │  WAYBAR - OXOCARBON                                                        │
+   ╰────────────────────────────────────────────────────────────────────────────╯
+
+   Split by region so a change has one obvious home. GTK resolves @import
+   relative to this file, and order matters: palette first, since everything
+   after it refers to those colours.
+
+   Palette:       https://github.com/nyoom-engineering/base16-oxocarbon
+   Desktop theme: https://github.com/rishav12s/Oxo-Carbon
+
+   This is GTK CSS, not browser CSS. @define-color rather than custom
+   properties, alpha() rather than rgb() slashes, @keyframes takes from/to, and
+   font-feature-settings takes a single string. VS Code is told not to lint it
+   in .vscode/settings.json.                                                    */
+
+@import url("style/palette.css");
+@import url("style/base.css");
+@import url("style/stats.css");
+@import url("style/workspaces.css");
+@import url("style/status.css");
+@import url("style/clawd.css");

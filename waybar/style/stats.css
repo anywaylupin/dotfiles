@@ -1,0 +1,14 @@
+/* ── Left island: machine stats ───────────────────────────────────────────── */
+
+/* ── Left: machine stats ──────────────────────────────────────────────────── */
+
+#cpu, #memory, #clock, #temperature {
+  padding: 0 10px;
+  color: alpha(@base04, 0.65);
+  transition: color 150ms ease;
+}
+#cpu          { padding-left: 14px; color: @base07; }
+#memory       { color: @base08; }
+#clock        { color: @base05; }
+#temperature  { color: alpha(@base04, 0.65); }
+#temperature.critical { color: @base0A; }

@@ -11,7 +11,8 @@
 --
 -- https://wiki.hypr.land/Configuring/Basics/Binds/
 
-local p = require("hypr.conf.programs")
+local p        = require("hypr.conf.programs")
+local services = require("hypr.conf.services")
 
 local STEP = 30   -- pixels per resize/move step
 
@@ -78,14 +79,30 @@ local EXACT = {
   ["launch.window_menu"]  = function() return hl.dsp.exec_cmd(p.window_menu) end,
   ["shot.region"]         = function() return hl.dsp.exec_cmd(p.shot_region) end,
   ["shot.screen"]         = function() return hl.dsp.exec_cmd(p.shot_screen) end,
+  ["launch.clipboard"]    = function() return hl.dsp.exec_cmd(p.clipboard) end,
+  ["launch.colorpick"]    = function() return hl.dsp.exec_cmd(p.colorpick) end,
+  ["launch.lock"]         = function() return hl.dsp.exec_cmd(p.lock) end,
 
   ["audio.mute"]      = function() return hl.dsp.exec_cmd(p.vol_mute) end,
-  ["audio.mute.fkey"] = function() return hl.dsp.exec_cmd(p.vol_mute) end,
   ["audio.down"]      = function() return hl.dsp.exec_cmd(p.vol_down) end,
-  ["audio.down.fkey"] = function() return hl.dsp.exec_cmd(p.vol_down) end,
   ["audio.up"]        = function() return hl.dsp.exec_cmd(p.vol_up) end,
-  ["audio.up.fkey"]   = function() return hl.dsp.exec_cmd(p.vol_up) end,
   ["audio.mic_mute"]  = function() return hl.dsp.exec_cmd(p.mic_mute) end,
+
+  ["bright.down"] = function() return hl.dsp.exec_cmd(p.bright_down) end,
+  ["bright.up"]   = function() return hl.dsp.exec_cmd(p.bright_up) end,
+
+  ["media.play"]  = function() return hl.dsp.exec_cmd(p.media_play) end,
+  ["media.pause"] = function() return hl.dsp.exec_cmd(p.media_play) end,
+  ["media.next"]  = function() return hl.dsp.exec_cmd(p.media_next) end,
+  ["media.prev"]  = function() return hl.dsp.exec_cmd(p.media_prev) end,
+
+  ["display.nightlight"] = function() return hl.dsp.exec_cmd(p.nightlight) end,
+
+  -- Kills and relaunches everything in conf/services.lua. Useful after editing
+  -- a waybar or hyprpaper config, which neither reloads on its own.
+  ["services.restart"] = function()
+    return hl.dsp.exec_cmd(services.restart_command())
+  end,
 }
 
 --- Resolve an id to a dispatcher, or nil if nothing matches.

@@ -16,6 +16,8 @@ local M = {
     blurb = "Layout, decoration and input" },
   { path = "/hypr/binds", name = "binds",     label = "Keybinds",  glyph = "⌨",
     blurb = "All 84 binds, editable" },
+  { path = "/waybar",     name = "waybar",    label = "Waybar",    glyph = "▤",
+    blurb = "Bar layout and modules" },
   { path = "/resources",  name = "resources", label = "Resources", glyph = "❖",
     blurb = "Docs and tools this is built on" },
 }

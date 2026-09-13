@@ -1,0 +1,114 @@
+// ── workspaces ──
+// Centre island. Ten clickable workspace buttons plus the focused window.
+// The native hyprland/workspaces module is not used: its built-in
+// `activate` sends a hyprlang dispatch string that a Lua-configured
+// Hyprland rejects, so clicking it does nothing.
+{
+  "custom/ws1": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 1 一",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 1 })'",
+    "tooltip": true
+  },
+  "custom/ws2": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 2 二",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 2 })'",
+    "tooltip": true
+  },
+  "custom/ws3": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 3 三",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 3 })'",
+    "tooltip": true
+  },
+  "custom/ws4": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 4 四",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 4 })'",
+    "tooltip": true
+  },
+  "custom/ws5": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 5 五",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 5 })'",
+    "tooltip": true
+  },
+  "custom/ws6": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 6 六",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 6 })'",
+    "tooltip": true
+  },
+  "custom/ws7": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 7 七",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 7 })'",
+    "tooltip": true
+  },
+  "custom/ws8": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 8 八",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 8 })'",
+    "tooltip": true
+  },
+  "custom/ws9": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 9 九",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 9 })'",
+    "tooltip": true
+  },
+  "custom/ws10": {
+    "exec": "$HOME/repos/dotfiles/waybar/scripts/ws-state.sh 10 十",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 1,
+    "format": "{}",
+    "on-click": "hyprctl dispatch 'hl.dsp.focus({ workspace = 10 })'",
+    "tooltip": true
+  },
+  "hyprland/submap": {
+    "format": "{}",
+    "tooltip-format": "active submap: {}"
+  },
+  "hyprland/window": {
+    "format": "{title}",
+    "icon": true,
+    "icon-size": 17,
+    "max-length": 34,
+    "separate-outputs": true,
+    "rewrite": {
+      "": "",
+      "(.*) - Mozilla Firefox": "$1",
+      "(.*) - Visual Studio Code": "$1",
+      "(.*) - Dolphin": "$1"
+    }
+  }
+}

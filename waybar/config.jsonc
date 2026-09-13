@@ -1,0 +1,26 @@
+// ╭──────────────────────────────────────────────────────────────────────────╮
+// │  WAYBAR - BAR LAYOUT (MACHINE-MANAGED)                                   │
+// ╰──────────────────────────────────────────────────────────────────────────╯
+//
+// Written by the web UI at /waybar. Hand edits survive until the next save,
+// which rewrites the whole file - so comments added here will be lost.
+//
+// Module options live in modules.jsonc, which this includes. The direction
+// matters: waybar resolves conflicts in favour of the INCLUDING file, so the
+// tunables must sit here and the definitions there, not the other way round.
+{
+  "include": [
+    "/home/anywaylupin/repos/dotfiles/waybar/modules/workspaces.jsonc",
+    "/home/anywaylupin/repos/dotfiles/waybar/modules/stats.jsonc",
+    "/home/anywaylupin/repos/dotfiles/waybar/modules/status.jsonc"
+  ],
+
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "spacing": 0,
+
+  "modules-left": ["cpu", "memory", "clock", "custom/date", "temperature"],
+  "modules-center": ["custom/ws1", "custom/ws2", "custom/ws3", "custom/ws4", "custom/ws5", "custom/ws6", "custom/ws7", "custom/ws8", "custom/ws9", "custom/ws10", "hyprland/submap", "hyprland/window"],
+  "modules-right": ["mpris", "custom/ai", "custom/im", "wireplumber", "backlight", "battery", "bluetooth", "network"]
+}

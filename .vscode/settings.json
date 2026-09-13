@@ -1,0 +1,33 @@
+{
+  // waybar/style.css is GTK CSS, not browser CSS. VS Code's built-in linter and
+  // the Tailwind extension both flag its perfectly valid syntax:
+  //   @define-color, alpha(), -gtk-icon-effect, font-feature-settings as one
+  //   string, and keyframes without the grouped "0%, 100%" selector.
+  // Turning validation off for this workspace is the fix; there is no GTK CSS
+  // language server to point at instead.
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "tailwindCSS.validate": false,
+  "tailwindCSS.emmetCompletions": false,
+
+  // The Lua here is Hyprland's config API and LuaJIT for the web app, neither of
+  // which the bundled linter knows. .luarc.json in hypr/ drives lua_ls instead.
+  "Lua.workspace.library": ["/usr/share/hypr/stubs"],
+  "Lua.diagnostics.globals": ["hl", "__require"],
+
+  "files.associations": {
+    "*.jsonc": "jsonc",
+    "waybar/**/*.css": "css",
+    "*.rasi": "css"
+  },
+
+  // jsonc with comments is how waybar configs are written.
+  "json.schemas": [],
+  "[jsonc]": { "editor.formatOnSave": false },
+
+  "editor.fontFamily": "'Cascadia Code', monospace",
+  "editor.fontLigatures": "'ss01', 'ss02', 'calt'",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}

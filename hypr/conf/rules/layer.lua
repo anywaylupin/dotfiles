@@ -14,6 +14,8 @@
 local BLUR = {
   "^(logout_dialog)$",
   "^(notifications)$",
+  "^(rofi)$",
+  "^(waybar)$",
   "^(wofi)$",
 }
 

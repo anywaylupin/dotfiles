@@ -70,6 +70,7 @@ end)
 -- ── Sections ────────────────────────────────────────────────────────────────
 
 app:include(require("routes.hypr"), { path = "/hypr", name = "hypr_" })
+app:include(require("routes.waybar"), { path = "/waybar", name = "waybar_" })
 
 -- ── Static files ────────────────────────────────────────────────────────────
 --

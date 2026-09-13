@@ -6,7 +6,8 @@ Arch Linux + Hyprland configuration, with a local web UI to edit it.
 - **`src/`** - a [Lapis](https://leafo.net/lapis/) app that reads and writes it,
   themed after *Black Myth: Wukong*.
 
-Config for another tool goes in a sibling of `hypr/`; the web app stays in `src/`.
+Config for another tool goes in a sibling of `hypr/` (`waybar/` is the first);
+the web app stays in `src/`.
 
 ## How to use this
 
@@ -22,8 +23,18 @@ cd ~/repos/dotfiles
 Install Hyprland and the tools the config calls:
 
 ```bash
-sudo pacman -S --needed hyprland kitty dolphin firefox code wofi \
-  grim slurp wl-clipboard wireplumber dunst ffmpeg
+sudo pacman -S --needed hyprland kitty dolphin firefox code \
+  wofi rofi waybar hyprpaper hyprlock hypridle hyprsunset hyprpicker \
+  grim slurp wl-clipboard cliphist wireplumber playerctl brightnessctl \
+  dunst pavucontrol blueman ffmpeg \
+  zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting
+```
+
+To make zsh your login shell (it is the shell, not the terminal - kitty stays
+the terminal emulator):
+
+```bash
+chsh -s /usr/bin/zsh
 ```
 
 Then run the two setup steps. Neither needs root:
@@ -47,7 +58,7 @@ Log out and back into Hyprland, or run `hyprctl reload`.
 ./dev
 ```
 
-Open <http://127.0.0.1:8080>. The homepage links to four pages:
+Open <http://127.0.0.1:1024>. The homepage links to four pages:
 
 | Page | What it does |
 |---|---|
@@ -178,13 +189,14 @@ option and some authentication first. Ask and I will add it.
 |---|---|
 | `./.tools/build.sh` | Build the local Lua toolchain. Run once. |
 | `hypr/install.sh` | Point `~/.config/hypr` at this repo. Idempotent. |
-| `./dev` | Serve <http://127.0.0.1:8080> |
+| `./dev` | Serve <http://127.0.0.1:1024> |
 | `./dev production` | Same, with code caching on |
 | `./dev stop` | Stop the server |
 | `Hyprland --verify-config -c ~/.config/hypr/hyprland.lua` | Check the config. |
 | `hyprctl reload` | Re-read the config in the running session |
 | `hyprctl monitors` | List outputs and their modes |
 | `hyprctl binds` | List the binds actually loaded |
+| `tools/save-preset.sh <name>` | Snapshot settings + keybinds as a preset |
 | `tools/export-static.sh` | Build the static showcase into `dist/` |
 | `tools/publish.sh` | Rebuild `dist/` and commit it for Vercel |
 
@@ -208,12 +220,14 @@ src/
     hypr/schema.lua      which settings are editable, and their bounds
     hypr/store.lua       settings: read / validate / write / verify / reload
     hypr/binds.lua       keybinds: the same, plus conflict detection
+    hypr/presets.lua     snapshot and restore both files together
     hypr/hyprctl.lua     live compositor state
   views/                 etlua templates; home.etlua is the bare layout
   static/                css, js, font, favicon, wallpaper
 hypr/                    THE LIVE CONFIG
   settings.lua           machine-managed values
   keybinds.lua           machine-managed combos, as plain data
+  presets/default.lua    a snapshot of both, for the reset button
   conf/binds/            dispatch.lua maps each id to what it does
   conf/rules/            window and layer rules, ordered by intent
 ```

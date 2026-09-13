@@ -1,0 +1,32 @@
+/* ── Clawd, and the tooltip ───────────────────────────────────────────────── */
+
+/* ── Clawd ────────────────────────────────────────────────────────────────── */
+/* The only thing on this bar that is not Oxocarbon. */
+
+#custom-ai {
+  padding-left: 32px;
+  color: @clawd;
+  background-size: 18px 18px;
+}
+#custom-ai.idle {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/clawd-idle.svg");
+}
+#custom-ai.tired {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/clawd-tired.svg");
+}
+#custom-ai.sleeping {
+  background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/clawd-sleep.svg");
+}
+#custom-ai.error { background-image: url("/home/anywaylupin/repos/dotfiles/waybar/icons/clawd-tired.svg"); }
+
+
+#tray { padding: 0 12px; background-image: none; }
+#tray > .passive         { -gtk-icon-effect: dim; }
+#tray > .needs-attention { -gtk-icon-effect: highlight; }
+
+tooltip {
+  background-color: alpha(@base01, 0.97);
+  border: 1px solid @base0A;
+  color: @base04;
+}
+tooltip label { padding: 4px 6px; color: @base04; }

@@ -104,13 +104,27 @@ return {
   { id = "launch.window_menu", group = "Launchers", combo = "SUPER + TAB", desc = "window switcher" },
   { id = "shot.region", group = "Launchers", combo = "SUPER + P", desc = "screenshot a region" },
   { id = "shot.screen", group = "Launchers", combo = "Print", desc = "screenshot all monitors", locked = true },
+  { id = "launch.clipboard", group = "Launchers", combo = "SUPER + V", desc = "clipboard history" },
+  { id = "launch.colorpick", group = "Launchers", combo = "SUPER + SHIFT + P", desc = "pick a colour" },
+  { id = "launch.lock", group = "Launchers", combo = "SUPER + L", desc = "lock the screen" },
 
   -- Hardware
   { id = "audio.mute", group = "Hardware", combo = "XF86AudioMute", desc = "toggle output mute", locked = true },
-  { id = "audio.mute.fkey", group = "Hardware", combo = "F10", desc = "toggle output mute", locked = true },
   { id = "audio.down", group = "Hardware", combo = "XF86AudioLowerVolume", desc = "decrease volume", locked = true, repeating = true },
-  { id = "audio.down.fkey", group = "Hardware", combo = "F11", desc = "decrease volume", locked = true, repeating = true },
   { id = "audio.up", group = "Hardware", combo = "XF86AudioRaiseVolume", desc = "increase volume", locked = true, repeating = true },
-  { id = "audio.up.fkey", group = "Hardware", combo = "F12", desc = "increase volume", locked = true, repeating = true },
   { id = "audio.mic_mute", group = "Hardware", combo = "XF86AudioMicMute", desc = "toggle mic mute", locked = true },
+  { id = "bright.down", group = "Hardware", combo = "XF86MonBrightnessDown", desc = "decrease brightness", locked = true, repeating = true },
+  { id = "bright.up", group = "Hardware", combo = "XF86MonBrightnessUp", desc = "increase brightness", locked = true, repeating = true },
+
+  -- Media
+  { id = "media.play", group = "Media", combo = "XF86AudioPlay", desc = "play or pause", locked = true },
+  { id = "media.pause", group = "Media", combo = "XF86AudioPause", desc = "play or pause", locked = true },
+  { id = "media.next", group = "Media", combo = "XF86AudioNext", desc = "next track", locked = true },
+  { id = "media.prev", group = "Media", combo = "XF86AudioPrev", desc = "previous track", locked = true },
+
+  -- Display
+  { id = "display.nightlight", group = "Display", combo = "SUPER + SHIFT + N", desc = "toggle night light" },
+
+  -- Session
+  { id = "services.restart", group = "Session", combo = "SUPER + SHIFT + R", desc = "restart startup services" },
 }
