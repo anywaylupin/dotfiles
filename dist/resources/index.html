@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="wukong">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources · arch config</title>
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  
+  <link rel="preload" href="/static/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/wukong.css?v=1789265628">
+</head>
+<body class="shell is-demo">
+
+  <div class="scroll-grain" aria-hidden="true"></div>
+
+  
+    <div class="demo-bar">
+      <strong>Read-only demo.</strong>
+      A static snapshot - there is no compositor behind it, so editing is off.
+      Run it locally to change anything.
+    </div>
+  
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand__text">arch<span class="brand__thin">config</span></span>
+    </a>
+
+    <nav class="topnav">
+      
+        <a class="topnav__item "
+           href="/system">
+          <span class="topnav__glyph" aria-hidden="true">◲</span>
+          System
+        </a>
+      
+        <a class="topnav__item "
+           href="/hypr">
+          <span class="topnav__glyph" aria-hidden="true">◈</span>
+          Hyprland
+        </a>
+      
+        <a class="topnav__item "
+           href="/hypr/binds">
+          <span class="topnav__glyph" aria-hidden="true">⌨</span>
+          Keybinds
+        </a>
+      
+        <a class="topnav__item is-active"
+           href="/resources">
+          <span class="topnav__glyph" aria-hidden="true">❖</span>
+          Resources
+        </a>
+      
+    </nav>
+
+    
+      <a class="topbar__repo" href="https://github.com/user/dotfiles" target="_blank" rel="noreferrer noopener"
+         title="Source on GitHub">
+        <svg class="topbar__repo-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47
+            7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+            1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+            0-.87.31-1.59.82-2.15-.07-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0
+            1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.15 1.92.08 2.12.51.56.82 1.27.82 2.15 0
+            3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01
+            8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+        </svg>
+        GitHub
+      </a>
+    
+  </header>
+
+  <main class="stage">
+    <header class="page-head">
+  <div>
+    <h1 class="page-head__title">Resources</h1>
+    <p class="page-head__sub">
+      Documentation, tools and sources this config is built on. Defined in
+      <code>src/lib/references.lua</code>.
+    </p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <label class="search">
+    <span class="search__glyph" aria-hidden="true">⌕</span>
+    <input type="search" id="resource-search" class="search__input"
+           placeholder="Search resources" autocomplete="off"
+           data-target=".refs__item" data-empty="#resource-empty">
+  </label>
+  <span class="toolbar__count" id="resource-count"></span>
+</div>
+
+<div class="grid">
+  
+    <div class="panel">
+      <div class="panel__title">Hyprland</div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          
+            <li class="refs__item" data-search="Wiki Hyprland the reference for everything below https://wiki.hypr.land/">
+              <a href="https://wiki.hypr.land/" target="_blank" rel="noreferrer noopener">Wiki</a>
+              <span class="refs__note">the reference for everything below</span>
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Configuring: start Hyprland the Lua config format https://wiki.hypr.land/Configuring/Start/">
+              <a href="https://wiki.hypr.land/Configuring/Start/" target="_blank" rel="noreferrer noopener">Configuring: start</a>
+              <span class="refs__note">the Lua config format</span>
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Variables Hyprland general, decoration, input https://wiki.hypr.land/Configuring/Basics/Variables/">
+              <a href="https://wiki.hypr.land/Configuring/Basics/Variables/" target="_blank" rel="noreferrer noopener">Variables</a>
+              <span class="refs__note">general, decoration, input</span>
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Binds Hyprland combos, flags, dispatchers https://wiki.hypr.land/Configuring/Basics/Binds/">
+              <a href="https://wiki.hypr.land/Configuring/Basics/Binds/" target="_blank" rel="noreferrer noopener">Binds</a>
+              <span class="refs__note">combos, flags, dispatchers</span>
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Window rules Hyprland  https://wiki.hypr.land/Configuring/Basics/Window-Rules/">
+              <a href="https://wiki.hypr.land/Configuring/Basics/Window-Rules/" target="_blank" rel="noreferrer noopener">Window rules</a>
+              
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Animations Hyprland  https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/">
+              <a href="https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/" target="_blank" rel="noreferrer noopener">Animations</a>
+              
+              <span class="refs__host mono">wiki.hypr.land</span>
+            </li>
+          
+            <li class="refs__item" data-search="Source Hyprland  https://github.com/hyprwm/Hyprland">
+              <a href="https://github.com/hyprwm/Hyprland" target="_blank" rel="noreferrer noopener">Source</a>
+              
+              <span class="refs__host mono">github.com</span>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Arch Linux</div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          
+            <li class="refs__item" data-search="ArchWiki: Hyprland Arch Linux  https://wiki.archlinux.org/title/Hyprland">
+              <a href="https://wiki.archlinux.org/title/Hyprland" target="_blank" rel="noreferrer noopener">ArchWiki: Hyprland</a>
+              
+              <span class="refs__host mono">wiki.archlinux.org</span>
+            </li>
+          
+            <li class="refs__item" data-search="ArchWiki: Dotfiles Arch Linux  https://wiki.archlinux.org/title/Dotfiles">
+              <a href="https://wiki.archlinux.org/title/Dotfiles" target="_blank" rel="noreferrer noopener">ArchWiki: Dotfiles</a>
+              
+              <span class="refs__host mono">wiki.archlinux.org</span>
+            </li>
+          
+            <li class="refs__item" data-search="Package search Arch Linux  https://archlinux.org/packages/">
+              <a href="https://archlinux.org/packages/" target="_blank" rel="noreferrer noopener">Package search</a>
+              
+              <span class="refs__host mono">archlinux.org</span>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Web stack</div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          
+            <li class="refs__item" data-search="Lapis Web stack the framework this app runs on https://leafo.net/lapis/">
+              <a href="https://leafo.net/lapis/" target="_blank" rel="noreferrer noopener">Lapis</a>
+              <span class="refs__note">the framework this app runs on</span>
+              <span class="refs__host mono">leafo.net</span>
+            </li>
+          
+            <li class="refs__item" data-search="etlua Web stack the templates in src/views https://github.com/leafo/etlua">
+              <a href="https://github.com/leafo/etlua" target="_blank" rel="noreferrer noopener">etlua</a>
+              <span class="refs__note">the templates in src/views</span>
+              <span class="refs__host mono">github.com</span>
+            </li>
+          
+            <li class="refs__item" data-search="LuaJIT Web stack vendored into .tools https://luajit.org/">
+              <a href="https://luajit.org/" target="_blank" rel="noreferrer noopener">LuaJIT</a>
+              <span class="refs__note">vendored into .tools</span>
+              <span class="refs__host mono">luajit.org</span>
+            </li>
+          
+            <li class="refs__item" data-search="LuaRocks Web stack vendored into .tools https://luarocks.org/">
+              <a href="https://luarocks.org/" target="_blank" rel="noreferrer noopener">LuaRocks</a>
+              <span class="refs__note">vendored into .tools</span>
+              <span class="refs__host mono">luarocks.org</span>
+            </li>
+          
+            <li class="refs__item" data-search="cqueues Web stack the server backend, in place of nginx https://github.com/wahern/cqueues">
+              <a href="https://github.com/wahern/cqueues" target="_blank" rel="noreferrer noopener">cqueues</a>
+              <span class="refs__note">the server backend, in place of nginx</span>
+              <span class="refs__host mono">github.com</span>
+            </li>
+          
+            <li class="refs__item" data-search="lua-http Web stack  https://github.com/daurnimator/lua-http">
+              <a href="https://github.com/daurnimator/lua-http" target="_blank" rel="noreferrer noopener">lua-http</a>
+              
+              <span class="refs__host mono">github.com</span>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Tools the config calls</div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          
+            <li class="refs__item" data-search="wofi Tools the config calls launcher https://hg.sr.ht/~scoopta/wofi">
+              <a href="https://hg.sr.ht/~scoopta/wofi" target="_blank" rel="noreferrer noopener">wofi</a>
+              <span class="refs__note">launcher</span>
+              <span class="refs__host mono">hg.sr.ht</span>
+            </li>
+          
+            <li class="refs__item" data-search="grim Tools the config calls screenshots https://sr.ht/~emersion/grim/">
+              <a href="https://sr.ht/~emersion/grim/" target="_blank" rel="noreferrer noopener">grim</a>
+              <span class="refs__note">screenshots</span>
+              <span class="refs__host mono">sr.ht</span>
+            </li>
+          
+            <li class="refs__item" data-search="slurp Tools the config calls region select https://github.com/emersion/slurp">
+              <a href="https://github.com/emersion/slurp" target="_blank" rel="noreferrer noopener">slurp</a>
+              <span class="refs__note">region select</span>
+              <span class="refs__host mono">github.com</span>
+            </li>
+          
+            <li class="refs__item" data-search="WirePlumber Tools the config calls wpctl, volume https://pipewire.pages.freedesktop.org/wireplumber/">
+              <a href="https://pipewire.pages.freedesktop.org/wireplumber/" target="_blank" rel="noreferrer noopener">WirePlumber</a>
+              <span class="refs__note">wpctl, volume</span>
+              <span class="refs__host mono">pipewire.pages.freedesktop.org</span>
+            </li>
+          
+            <li class="refs__item" data-search="dunst Tools the config calls notifications https://dunst-project.org/">
+              <a href="https://dunst-project.org/" target="_blank" rel="noreferrer noopener">dunst</a>
+              <span class="refs__note">notifications</span>
+              <span class="refs__host mono">dunst-project.org</span>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Theme</div>
+      <div class="panel__body">
+        <ul class="refs__list">
+          
+            <li class="refs__item" data-search="Black Myth: Wukong Theme palette and artwork source - fetched at install, not redistributed https://gamesci.cn/wukong">
+              <a href="https://gamesci.cn/wukong" target="_blank" rel="noreferrer noopener">Black Myth: Wukong</a>
+              <span class="refs__note">palette and artwork source - fetched at install, not redistributed</span>
+              <span class="refs__host mono">gamesci.cn</span>
+            </li>
+          
+            <li class="refs__item" data-search="Crimson Pro Theme the display serif, SIL OFL 1.1 https://fonts.google.com/specimen/Crimson+Pro">
+              <a href="https://fonts.google.com/specimen/Crimson+Pro" target="_blank" rel="noreferrer noopener">Crimson Pro</a>
+              <span class="refs__note">the display serif, SIL OFL 1.1</span>
+              <span class="refs__host mono">fonts.google.com</span>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  
+</div>
+
+<p class="empty" id="resource-empty" hidden>Nothing matches that search.</p>
+
+  </main>
+
+  <script src="/static/js/app.js?v=1789265628" defer></script>
+</body>
+</html>

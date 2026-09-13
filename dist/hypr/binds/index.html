@@ -1,0 +1,2522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="wukong">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keybinds · arch config</title>
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  
+  <link rel="preload" href="/static/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/wukong.css?v=1789265628">
+</head>
+<body class="shell is-demo">
+
+  <div class="scroll-grain" aria-hidden="true"></div>
+
+  
+    <div class="demo-bar">
+      <strong>Read-only demo.</strong>
+      A static snapshot - there is no compositor behind it, so editing is off.
+      Run it locally to change anything.
+    </div>
+  
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand__text">arch<span class="brand__thin">config</span></span>
+    </a>
+
+    <nav class="topnav">
+      
+        <a class="topnav__item "
+           href="/system">
+          <span class="topnav__glyph" aria-hidden="true">◲</span>
+          System
+        </a>
+      
+        <a class="topnav__item "
+           href="/hypr">
+          <span class="topnav__glyph" aria-hidden="true">◈</span>
+          Hyprland
+        </a>
+      
+        <a class="topnav__item is-active"
+           href="/hypr/binds">
+          <span class="topnav__glyph" aria-hidden="true">⌨</span>
+          Keybinds
+        </a>
+      
+        <a class="topnav__item "
+           href="/resources">
+          <span class="topnav__glyph" aria-hidden="true">❖</span>
+          Resources
+        </a>
+      
+    </nav>
+
+    
+      <a class="topbar__repo" href="https://github.com/user/dotfiles" target="_blank" rel="noreferrer noopener"
+         title="Source on GitHub">
+        <svg class="topbar__repo-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47
+            7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+            1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+            0-.87.31-1.59.82-2.15-.07-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0
+            1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.15 1.92.08 2.12.51.56.82 1.27.82 2.15 0
+            3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01
+            8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+        </svg>
+        GitHub
+      </a>
+    
+  </header>
+
+  <main class="stage">
+    <header class="page-head">
+  <div>
+    <h1 class="page-head__title">Keybinds</h1>
+    <p class="page-head__sub">
+      Click a combo and hold the keys you want. Writes <code>hypr/keybinds.lua</code>,
+      verifies it, then reloads the running session.
+    </p>
+  </div>
+  <a class="btn btn--ghost" href="/hypr">&lsaquo; Settings</a>
+</header>
+
+
+
+
+
+
+<form method="post" action="/hypr/binds/save" class="form" inert id="binds-form">
+  <input type="hidden" name="csrf_token" value="eyJrIjoiRzVlcW5wRHFcL0dHY0JPMzRxeGpFZEtINXRBckRcL29ldTdsS01xWXBTSjdRPSJ9.WzfF7aBbZT5ev9aFqso3+1AriWY=">
+  
+  <input type="hidden" name="accept_conflicts" id="accept-conflicts" value="0">
+
+  <div class="toolbar">
+    <label class="search">
+      <span class="search__glyph" aria-hidden="true">⌕</span>
+      <input type="search" id="bind-search" class="search__input"
+             placeholder="Search keybinds by action, combo or id" autocomplete="off"
+             data-target=".bind-row" data-empty="#bind-empty">
+    </label>
+    <span class="toolbar__count" id="bind-count"></span>
+    <span class="toolbar__warn " id="conflict-count"
+          data-count="0">
+      0 conflicting
+    </span>
+  </div>
+
+  <div class="grid">
+  
+    <div class="panel bind-group">
+      <div class="panel__title">Window</div>
+      <div class="panel__body">
+        
+          
+          <div class="bind-row  "
+               data-search="close focused window SUPER + Q window.close">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">close focused window</span>
+              <span class="bind-row__id mono">window.close</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.close"
+                      aria-label="Change the combo for close focused window">
+                <span class="combo__text">SUPER + Q</span>
+              </button>
+              <input type="hidden" id="combo-window.close" name="combo.window.close" value="SUPER + Q">
+              <button type="button" class="combo__reset" data-reset="combo-window.close"
+                      data-original="SUPER + Q" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="close focused window ALT + F4 window.close.alt">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">close focused window</span>
+              <span class="bind-row__id mono">window.close.alt</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.close.alt"
+                      aria-label="Change the combo for close focused window">
+                <span class="combo__text">ALT + F4</span>
+              </button>
+              <input type="hidden" id="combo-window.close.alt" name="combo.window.close.alt" value="ALT + F4">
+              <button type="button" class="combo__reset" data-reset="combo-window.close.alt"
+                      data-original="ALT + F4" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="cycle focus ALT + Tab window.cycle">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">cycle focus</span>
+              <span class="bind-row__id mono">window.cycle</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.cycle"
+                      aria-label="Change the combo for cycle focus">
+                <span class="combo__text">ALT + Tab</span>
+              </button>
+              <input type="hidden" id="combo-window.cycle" name="combo.window.cycle" value="ALT + Tab">
+              <button type="button" class="combo__reset" data-reset="combo-window.cycle"
+                      data-original="ALT + Tab" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle fullscreen SHIFT + F11 window.fullscreen">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle fullscreen</span>
+              <span class="bind-row__id mono">window.fullscreen</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.fullscreen"
+                      aria-label="Change the combo for toggle fullscreen">
+                <span class="combo__text">SHIFT + F11</span>
+              </button>
+              <input type="hidden" id="combo-window.fullscreen" name="combo.window.fullscreen" value="SHIFT + F11">
+              <button type="button" class="combo__reset" data-reset="combo-window.fullscreen"
+                      data-original="SHIFT + F11" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle floating SUPER + Space window.float">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle floating</span>
+              <span class="bind-row__id mono">window.float</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.float"
+                      aria-label="Change the combo for toggle floating">
+                <span class="combo__text">SUPER + Space</span>
+              </button>
+              <input type="hidden" id="combo-window.float" name="combo.window.float" value="SUPER + Space">
+              <button type="button" class="combo__reset" data-reset="combo-window.float"
+                      data-original="SUPER + Space" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle pin SUPER + SHIFT + F window.pin">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle pin</span>
+              <span class="bind-row__id mono">window.pin</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.pin"
+                      aria-label="Change the combo for toggle pin">
+                <span class="combo__text">SUPER + SHIFT + F</span>
+              </button>
+              <input type="hidden" id="combo-window.pin" name="combo.window.pin" value="SUPER + SHIFT + F">
+              <button type="button" class="combo__reset" data-reset="combo-window.pin"
+                      data-original="SUPER + SHIFT + F" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle split (dwindle) SUPER + J layout.togglesplit">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle split (dwindle)</span>
+              <span class="bind-row__id mono">layout.togglesplit</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-layout.togglesplit"
+                      aria-label="Change the combo for toggle split (dwindle)">
+                <span class="combo__text">SUPER + J</span>
+              </button>
+              <input type="hidden" id="combo-layout.togglesplit" name="combo.layout.togglesplit" value="SUPER + J">
+              <button type="button" class="combo__reset" data-reset="combo-layout.togglesplit"
+                      data-original="SUPER + J" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle group SUPER + G group.toggle">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle group</span>
+              <span class="bind-row__id mono">group.toggle</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-group.toggle"
+                      aria-label="Change the combo for toggle group">
+                <span class="combo__text">SUPER + G</span>
+              </button>
+              <input type="hidden" id="combo-group.toggle" name="combo.group.toggle" value="SUPER + G">
+              <button type="button" class="combo__reset" data-reset="combo-group.toggle"
+                      data-original="SUPER + G" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="previous window in group SUPER + CTRL + H group.prev">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">previous window in group</span>
+              <span class="bind-row__id mono">group.prev</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-group.prev"
+                      aria-label="Change the combo for previous window in group">
+                <span class="combo__text">SUPER + CTRL + H</span>
+              </button>
+              <input type="hidden" id="combo-group.prev" name="combo.group.prev" value="SUPER + CTRL + H">
+              <button type="button" class="combo__reset" data-reset="combo-group.prev"
+                      data-original="SUPER + CTRL + H" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="next window in group SUPER + CTRL + L group.next">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">next window in group</span>
+              <span class="bind-row__id mono">group.next</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-group.next"
+                      aria-label="Change the combo for next window in group">
+                <span class="combo__text">SUPER + CTRL + L</span>
+              </button>
+              <input type="hidden" id="combo-group.next" name="combo.group.next" value="SUPER + CTRL + L">
+              <button type="button" class="combo__reset" data-reset="combo-group.next"
+                      data-original="SUPER + CTRL + L" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="exit hyprland session SUPER + Delete session.exit">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">exit hyprland session</span>
+              <span class="bind-row__id mono">session.exit</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-session.exit"
+                      aria-label="Change the combo for exit hyprland session">
+                <span class="combo__text">SUPER + Delete</span>
+              </button>
+              <input type="hidden" id="combo-session.exit" name="combo.session.exit" value="SUPER + Delete">
+              <button type="button" class="combo__reset" data-reset="combo-session.exit"
+                      data-original="SUPER + Delete" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="hold to move window SUPER + Z window.drag.key">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">hold to move window</span>
+              <span class="bind-row__id mono">window.drag.key</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.drag.key"
+                      aria-label="Change the combo for hold to move window">
+                <span class="combo__text">SUPER + Z</span>
+              </button>
+              <input type="hidden" id="combo-window.drag.key" name="combo.window.drag.key" value="SUPER + Z">
+              <button type="button" class="combo__reset" data-reset="combo-window.drag.key"
+                      data-original="SUPER + Z" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              <span class="pill" title="Hold to drag">mouse</span>
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="hold to resize window SUPER + X window.resize.key">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">hold to resize window</span>
+              <span class="bind-row__id mono">window.resize.key</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.resize.key"
+                      aria-label="Change the combo for hold to resize window">
+                <span class="combo__text">SUPER + X</span>
+              </button>
+              <input type="hidden" id="combo-window.resize.key" name="combo.window.resize.key" value="SUPER + X">
+              <button type="button" class="combo__reset" data-reset="combo-window.resize.key"
+                      data-original="SUPER + X" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              <span class="pill" title="Hold to drag">mouse</span>
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="hold to move window SUPER + mouse:272 window.drag.lmb">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">hold to move window</span>
+              <span class="bind-row__id mono">window.drag.lmb</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.drag.lmb"
+                      aria-label="Change the combo for hold to move window">
+                <span class="combo__text">SUPER + mouse:272</span>
+              </button>
+              <input type="hidden" id="combo-window.drag.lmb" name="combo.window.drag.lmb" value="SUPER + mouse:272">
+              <button type="button" class="combo__reset" data-reset="combo-window.drag.lmb"
+                      data-original="SUPER + mouse:272" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              <span class="pill" title="Hold to drag">mouse</span>
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="hold to resize window SUPER + mouse:273 window.resize.rmb">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">hold to resize window</span>
+              <span class="bind-row__id mono">window.resize.rmb</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-window.resize.rmb"
+                      aria-label="Change the combo for hold to resize window">
+                <span class="combo__text">SUPER + mouse:273</span>
+              </button>
+              <input type="hidden" id="combo-window.resize.rmb" name="combo.window.resize.rmb" value="SUPER + mouse:273">
+              <button type="button" class="combo__reset" data-reset="combo-window.resize.rmb"
+                      data-original="SUPER + mouse:273" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              <span class="pill" title="Hold to drag">mouse</span>
+            </div>
+
+            
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel bind-group">
+      <div class="panel__title">Motion</div>
+      <div class="panel__body">
+        
+          
+          <div class="bind-row  "
+               data-search="focus left SUPER + Left focus.left">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">focus left</span>
+              <span class="bind-row__id mono">focus.left</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-focus.left"
+                      aria-label="Change the combo for focus left">
+                <span class="combo__text">SUPER + Left</span>
+              </button>
+              <input type="hidden" id="combo-focus.left" name="combo.focus.left" value="SUPER + Left">
+              <button type="button" class="combo__reset" data-reset="combo-focus.left"
+                      data-original="SUPER + Left" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="focus right SUPER + Right focus.right">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">focus right</span>
+              <span class="bind-row__id mono">focus.right</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-focus.right"
+                      aria-label="Change the combo for focus right">
+                <span class="combo__text">SUPER + Right</span>
+              </button>
+              <input type="hidden" id="combo-focus.right" name="combo.focus.right" value="SUPER + Right">
+              <button type="button" class="combo__reset" data-reset="combo-focus.right"
+                      data-original="SUPER + Right" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="focus up SUPER + Up focus.up">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">focus up</span>
+              <span class="bind-row__id mono">focus.up</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-focus.up"
+                      aria-label="Change the combo for focus up">
+                <span class="combo__text">SUPER + Up</span>
+              </button>
+              <input type="hidden" id="combo-focus.up" name="combo.focus.up" value="SUPER + Up">
+              <button type="button" class="combo__reset" data-reset="combo-focus.up"
+                      data-original="SUPER + Up" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="focus down SUPER + Down focus.down">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">focus down</span>
+              <span class="bind-row__id mono">focus.down</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-focus.down"
+                      aria-label="Change the combo for focus down">
+                <span class="combo__text">SUPER + Down</span>
+              </button>
+              <input type="hidden" id="combo-focus.down" name="combo.focus.down" value="SUPER + Down">
+              <button type="button" class="combo__reset" data-reset="combo-focus.down"
+                      data-original="SUPER + Down" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="resize window left SUPER + SHIFT + Left resize.left">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">resize window left</span>
+              <span class="bind-row__id mono">resize.left</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-resize.left"
+                      aria-label="Change the combo for resize window left">
+                <span class="combo__text">SUPER + SHIFT + Left</span>
+              </button>
+              <input type="hidden" id="combo-resize.left" name="combo.resize.left" value="SUPER + SHIFT + Left">
+              <button type="button" class="combo__reset" data-reset="combo-resize.left"
+                      data-original="SUPER + SHIFT + Left" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="resize window right SUPER + SHIFT + Right resize.right">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">resize window right</span>
+              <span class="bind-row__id mono">resize.right</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-resize.right"
+                      aria-label="Change the combo for resize window right">
+                <span class="combo__text">SUPER + SHIFT + Right</span>
+              </button>
+              <input type="hidden" id="combo-resize.right" name="combo.resize.right" value="SUPER + SHIFT + Right">
+              <button type="button" class="combo__reset" data-reset="combo-resize.right"
+                      data-original="SUPER + SHIFT + Right" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="resize window up SUPER + SHIFT + Up resize.up">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">resize window up</span>
+              <span class="bind-row__id mono">resize.up</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-resize.up"
+                      aria-label="Change the combo for resize window up">
+                <span class="combo__text">SUPER + SHIFT + Up</span>
+              </button>
+              <input type="hidden" id="combo-resize.up" name="combo.resize.up" value="SUPER + SHIFT + Up">
+              <button type="button" class="combo__reset" data-reset="combo-resize.up"
+                      data-original="SUPER + SHIFT + Up" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="resize window down SUPER + SHIFT + Down resize.down">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">resize window down</span>
+              <span class="bind-row__id mono">resize.down</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-resize.down"
+                      aria-label="Change the combo for resize window down">
+                <span class="combo__text">SUPER + SHIFT + Down</span>
+              </button>
+              <input type="hidden" id="combo-resize.down" name="combo.resize.down" value="SUPER + SHIFT + Down">
+              <button type="button" class="combo__reset" data-reset="combo-resize.down"
+                      data-original="SUPER + SHIFT + Down" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window left SUPER + CTRL + SHIFT + Left move.left">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window left</span>
+              <span class="bind-row__id mono">move.left</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-move.left"
+                      aria-label="Change the combo for move window left">
+                <span class="combo__text">SUPER + CTRL + SHIFT + Left</span>
+              </button>
+              <input type="hidden" id="combo-move.left" name="combo.move.left" value="SUPER + CTRL + SHIFT + Left">
+              <button type="button" class="combo__reset" data-reset="combo-move.left"
+                      data-original="SUPER + CTRL + SHIFT + Left" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window right SUPER + CTRL + SHIFT + Right move.right">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window right</span>
+              <span class="bind-row__id mono">move.right</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-move.right"
+                      aria-label="Change the combo for move window right">
+                <span class="combo__text">SUPER + CTRL + SHIFT + Right</span>
+              </button>
+              <input type="hidden" id="combo-move.right" name="combo.move.right" value="SUPER + CTRL + SHIFT + Right">
+              <button type="button" class="combo__reset" data-reset="combo-move.right"
+                      data-original="SUPER + CTRL + SHIFT + Right" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window up SUPER + CTRL + SHIFT + Up move.up">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window up</span>
+              <span class="bind-row__id mono">move.up</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-move.up"
+                      aria-label="Change the combo for move window up">
+                <span class="combo__text">SUPER + CTRL + SHIFT + Up</span>
+              </button>
+              <input type="hidden" id="combo-move.up" name="combo.move.up" value="SUPER + CTRL + SHIFT + Up">
+              <button type="button" class="combo__reset" data-reset="combo-move.up"
+                      data-original="SUPER + CTRL + SHIFT + Up" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window down SUPER + CTRL + SHIFT + Down move.down">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window down</span>
+              <span class="bind-row__id mono">move.down</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-move.down"
+                      aria-label="Change the combo for move window down">
+                <span class="combo__text">SUPER + CTRL + SHIFT + Down</span>
+              </button>
+              <input type="hidden" id="combo-move.down" name="combo.move.down" value="SUPER + CTRL + SHIFT + Down">
+              <button type="button" class="combo__reset" data-reset="combo-move.down"
+                      data-original="SUPER + CTRL + SHIFT + Down" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel bind-group">
+      <div class="panel__title">Workspaces</div>
+      <div class="panel__body">
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 1 SUPER + 1 workspace.focus.1">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 1</span>
+              <span class="bind-row__id mono">workspace.focus.1</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.1"
+                      aria-label="Change the combo for switch to workspace 1">
+                <span class="combo__text">SUPER + 1</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.1" name="combo.workspace.focus.1" value="SUPER + 1">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.1"
+                      data-original="SUPER + 1" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 2 SUPER + 2 workspace.focus.2">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 2</span>
+              <span class="bind-row__id mono">workspace.focus.2</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.2"
+                      aria-label="Change the combo for switch to workspace 2">
+                <span class="combo__text">SUPER + 2</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.2" name="combo.workspace.focus.2" value="SUPER + 2">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.2"
+                      data-original="SUPER + 2" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 3 SUPER + 3 workspace.focus.3">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 3</span>
+              <span class="bind-row__id mono">workspace.focus.3</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.3"
+                      aria-label="Change the combo for switch to workspace 3">
+                <span class="combo__text">SUPER + 3</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.3" name="combo.workspace.focus.3" value="SUPER + 3">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.3"
+                      data-original="SUPER + 3" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 4 SUPER + 4 workspace.focus.4">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 4</span>
+              <span class="bind-row__id mono">workspace.focus.4</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.4"
+                      aria-label="Change the combo for switch to workspace 4">
+                <span class="combo__text">SUPER + 4</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.4" name="combo.workspace.focus.4" value="SUPER + 4">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.4"
+                      data-original="SUPER + 4" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 5 SUPER + 5 workspace.focus.5">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 5</span>
+              <span class="bind-row__id mono">workspace.focus.5</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.5"
+                      aria-label="Change the combo for switch to workspace 5">
+                <span class="combo__text">SUPER + 5</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.5" name="combo.workspace.focus.5" value="SUPER + 5">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.5"
+                      data-original="SUPER + 5" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 6 SUPER + 6 workspace.focus.6">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 6</span>
+              <span class="bind-row__id mono">workspace.focus.6</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.6"
+                      aria-label="Change the combo for switch to workspace 6">
+                <span class="combo__text">SUPER + 6</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.6" name="combo.workspace.focus.6" value="SUPER + 6">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.6"
+                      data-original="SUPER + 6" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 7 SUPER + 7 workspace.focus.7">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 7</span>
+              <span class="bind-row__id mono">workspace.focus.7</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.7"
+                      aria-label="Change the combo for switch to workspace 7">
+                <span class="combo__text">SUPER + 7</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.7" name="combo.workspace.focus.7" value="SUPER + 7">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.7"
+                      data-original="SUPER + 7" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 8 SUPER + 8 workspace.focus.8">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 8</span>
+              <span class="bind-row__id mono">workspace.focus.8</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.8"
+                      aria-label="Change the combo for switch to workspace 8">
+                <span class="combo__text">SUPER + 8</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.8" name="combo.workspace.focus.8" value="SUPER + 8">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.8"
+                      data-original="SUPER + 8" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 9 SUPER + 9 workspace.focus.9">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 9</span>
+              <span class="bind-row__id mono">workspace.focus.9</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.9"
+                      aria-label="Change the combo for switch to workspace 9">
+                <span class="combo__text">SUPER + 9</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.9" name="combo.workspace.focus.9" value="SUPER + 9">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.9"
+                      data-original="SUPER + 9" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to workspace 10 SUPER + 0 workspace.focus.10">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to workspace 10</span>
+              <span class="bind-row__id mono">workspace.focus.10</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.10"
+                      aria-label="Change the combo for switch to workspace 10">
+                <span class="combo__text">SUPER + 0</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.10" name="combo.workspace.focus.10" value="SUPER + 0">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.10"
+                      data-original="SUPER + 0" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 1 SUPER + SHIFT + 1 workspace.move.1">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 1</span>
+              <span class="bind-row__id mono">workspace.move.1</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.1"
+                      aria-label="Change the combo for move window to workspace 1">
+                <span class="combo__text">SUPER + SHIFT + 1</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.1" name="combo.workspace.move.1" value="SUPER + SHIFT + 1">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.1"
+                      data-original="SUPER + SHIFT + 1" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 2 SUPER + SHIFT + 2 workspace.move.2">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 2</span>
+              <span class="bind-row__id mono">workspace.move.2</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.2"
+                      aria-label="Change the combo for move window to workspace 2">
+                <span class="combo__text">SUPER + SHIFT + 2</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.2" name="combo.workspace.move.2" value="SUPER + SHIFT + 2">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.2"
+                      data-original="SUPER + SHIFT + 2" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 3 SUPER + SHIFT + 3 workspace.move.3">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 3</span>
+              <span class="bind-row__id mono">workspace.move.3</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.3"
+                      aria-label="Change the combo for move window to workspace 3">
+                <span class="combo__text">SUPER + SHIFT + 3</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.3" name="combo.workspace.move.3" value="SUPER + SHIFT + 3">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.3"
+                      data-original="SUPER + SHIFT + 3" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 4 SUPER + SHIFT + 4 workspace.move.4">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 4</span>
+              <span class="bind-row__id mono">workspace.move.4</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.4"
+                      aria-label="Change the combo for move window to workspace 4">
+                <span class="combo__text">SUPER + SHIFT + 4</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.4" name="combo.workspace.move.4" value="SUPER + SHIFT + 4">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.4"
+                      data-original="SUPER + SHIFT + 4" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 5 SUPER + SHIFT + 5 workspace.move.5">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 5</span>
+              <span class="bind-row__id mono">workspace.move.5</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.5"
+                      aria-label="Change the combo for move window to workspace 5">
+                <span class="combo__text">SUPER + SHIFT + 5</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.5" name="combo.workspace.move.5" value="SUPER + SHIFT + 5">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.5"
+                      data-original="SUPER + SHIFT + 5" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 6 SUPER + SHIFT + 6 workspace.move.6">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 6</span>
+              <span class="bind-row__id mono">workspace.move.6</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.6"
+                      aria-label="Change the combo for move window to workspace 6">
+                <span class="combo__text">SUPER + SHIFT + 6</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.6" name="combo.workspace.move.6" value="SUPER + SHIFT + 6">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.6"
+                      data-original="SUPER + SHIFT + 6" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 7 SUPER + SHIFT + 7 workspace.move.7">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 7</span>
+              <span class="bind-row__id mono">workspace.move.7</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.7"
+                      aria-label="Change the combo for move window to workspace 7">
+                <span class="combo__text">SUPER + SHIFT + 7</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.7" name="combo.workspace.move.7" value="SUPER + SHIFT + 7">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.7"
+                      data-original="SUPER + SHIFT + 7" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 8 SUPER + SHIFT + 8 workspace.move.8">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 8</span>
+              <span class="bind-row__id mono">workspace.move.8</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.8"
+                      aria-label="Change the combo for move window to workspace 8">
+                <span class="combo__text">SUPER + SHIFT + 8</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.8" name="combo.workspace.move.8" value="SUPER + SHIFT + 8">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.8"
+                      data-original="SUPER + SHIFT + 8" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 9 SUPER + SHIFT + 9 workspace.move.9">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 9</span>
+              <span class="bind-row__id mono">workspace.move.9</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.9"
+                      aria-label="Change the combo for move window to workspace 9">
+                <span class="combo__text">SUPER + SHIFT + 9</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.9" name="combo.workspace.move.9" value="SUPER + SHIFT + 9">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.9"
+                      data-original="SUPER + SHIFT + 9" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 10 SUPER + SHIFT + 0 workspace.move.10">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 10</span>
+              <span class="bind-row__id mono">workspace.move.10</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.10"
+                      aria-label="Change the combo for move window to workspace 10">
+                <span class="combo__text">SUPER + SHIFT + 0</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.10" name="combo.workspace.move.10" value="SUPER + SHIFT + 0">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.10"
+                      data-original="SUPER + SHIFT + 0" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 1 (silent) SUPER + ALT + 1 workspace.move_silent.1">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 1 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.1</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.1"
+                      aria-label="Change the combo for move window to workspace 1 (silent)">
+                <span class="combo__text">SUPER + ALT + 1</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.1" name="combo.workspace.move_silent.1" value="SUPER + ALT + 1">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.1"
+                      data-original="SUPER + ALT + 1" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 2 (silent) SUPER + ALT + 2 workspace.move_silent.2">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 2 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.2</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.2"
+                      aria-label="Change the combo for move window to workspace 2 (silent)">
+                <span class="combo__text">SUPER + ALT + 2</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.2" name="combo.workspace.move_silent.2" value="SUPER + ALT + 2">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.2"
+                      data-original="SUPER + ALT + 2" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 3 (silent) SUPER + ALT + 3 workspace.move_silent.3">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 3 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.3</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.3"
+                      aria-label="Change the combo for move window to workspace 3 (silent)">
+                <span class="combo__text">SUPER + ALT + 3</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.3" name="combo.workspace.move_silent.3" value="SUPER + ALT + 3">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.3"
+                      data-original="SUPER + ALT + 3" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 4 (silent) SUPER + ALT + 4 workspace.move_silent.4">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 4 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.4</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.4"
+                      aria-label="Change the combo for move window to workspace 4 (silent)">
+                <span class="combo__text">SUPER + ALT + 4</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.4" name="combo.workspace.move_silent.4" value="SUPER + ALT + 4">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.4"
+                      data-original="SUPER + ALT + 4" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 5 (silent) SUPER + ALT + 5 workspace.move_silent.5">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 5 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.5</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.5"
+                      aria-label="Change the combo for move window to workspace 5 (silent)">
+                <span class="combo__text">SUPER + ALT + 5</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.5" name="combo.workspace.move_silent.5" value="SUPER + ALT + 5">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.5"
+                      data-original="SUPER + ALT + 5" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 6 (silent) SUPER + ALT + 6 workspace.move_silent.6">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 6 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.6</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.6"
+                      aria-label="Change the combo for move window to workspace 6 (silent)">
+                <span class="combo__text">SUPER + ALT + 6</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.6" name="combo.workspace.move_silent.6" value="SUPER + ALT + 6">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.6"
+                      data-original="SUPER + ALT + 6" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 7 (silent) SUPER + ALT + 7 workspace.move_silent.7">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 7 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.7</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.7"
+                      aria-label="Change the combo for move window to workspace 7 (silent)">
+                <span class="combo__text">SUPER + ALT + 7</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.7" name="combo.workspace.move_silent.7" value="SUPER + ALT + 7">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.7"
+                      data-original="SUPER + ALT + 7" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 8 (silent) SUPER + ALT + 8 workspace.move_silent.8">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 8 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.8</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.8"
+                      aria-label="Change the combo for move window to workspace 8 (silent)">
+                <span class="combo__text">SUPER + ALT + 8</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.8" name="combo.workspace.move_silent.8" value="SUPER + ALT + 8">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.8"
+                      data-original="SUPER + ALT + 8" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 9 (silent) SUPER + ALT + 9 workspace.move_silent.9">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 9 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.9</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.9"
+                      aria-label="Change the combo for move window to workspace 9 (silent)">
+                <span class="combo__text">SUPER + ALT + 9</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.9" name="combo.workspace.move_silent.9" value="SUPER + ALT + 9">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.9"
+                      data-original="SUPER + ALT + 9" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to workspace 10 (silent) SUPER + ALT + 0 workspace.move_silent.10">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to workspace 10 (silent)</span>
+              <span class="bind-row__id mono">workspace.move_silent.10</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move_silent.10"
+                      aria-label="Change the combo for move window to workspace 10 (silent)">
+                <span class="combo__text">SUPER + ALT + 0</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move_silent.10" name="combo.workspace.move_silent.10" value="SUPER + ALT + 0">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move_silent.10"
+                      data-original="SUPER + ALT + 0" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="next workspace SUPER + CTRL + Right workspace.focus.next">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">next workspace</span>
+              <span class="bind-row__id mono">workspace.focus.next</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.next"
+                      aria-label="Change the combo for next workspace">
+                <span class="combo__text">SUPER + CTRL + Right</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.next" name="combo.workspace.focus.next" value="SUPER + CTRL + Right">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.next"
+                      data-original="SUPER + CTRL + Right" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="previous workspace SUPER + CTRL + Left workspace.focus.prev">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">previous workspace</span>
+              <span class="bind-row__id mono">workspace.focus.prev</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.prev"
+                      aria-label="Change the combo for previous workspace">
+                <span class="combo__text">SUPER + CTRL + Left</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.prev" name="combo.workspace.focus.prev" value="SUPER + CTRL + Left">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.prev"
+                      data-original="SUPER + CTRL + Left" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="switch to nearest empty workspace SUPER + CTRL + Down workspace.focus.empty">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">switch to nearest empty workspace</span>
+              <span class="bind-row__id mono">workspace.focus.empty</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.focus.empty"
+                      aria-label="Change the combo for switch to nearest empty workspace">
+                <span class="combo__text">SUPER + CTRL + Down</span>
+              </button>
+              <input type="hidden" id="combo-workspace.focus.empty" name="combo.workspace.focus.empty" value="SUPER + CTRL + Down">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.focus.empty"
+                      data-original="SUPER + CTRL + Down" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to next workspace SUPER + CTRL + ALT + Right workspace.move.next">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to next workspace</span>
+              <span class="bind-row__id mono">workspace.move.next</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.next"
+                      aria-label="Change the combo for move window to next workspace">
+                <span class="combo__text">SUPER + CTRL + ALT + Right</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.next" name="combo.workspace.move.next" value="SUPER + CTRL + ALT + Right">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.next"
+                      data-original="SUPER + CTRL + ALT + Right" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move window to previous workspace SUPER + CTRL + ALT + Left workspace.move.prev">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move window to previous workspace</span>
+              <span class="bind-row__id mono">workspace.move.prev</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.move.prev"
+                      aria-label="Change the combo for move window to previous workspace">
+                <span class="combo__text">SUPER + CTRL + ALT + Left</span>
+              </button>
+              <input type="hidden" id="combo-workspace.move.prev" name="combo.workspace.move.prev" value="SUPER + CTRL + ALT + Left">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.move.prev"
+                      data-original="SUPER + CTRL + ALT + Left" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="next workspace SUPER + mouse_down workspace.scroll.next">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">next workspace</span>
+              <span class="bind-row__id mono">workspace.scroll.next</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.scroll.next"
+                      aria-label="Change the combo for next workspace">
+                <span class="combo__text">SUPER + mouse_down</span>
+              </button>
+              <input type="hidden" id="combo-workspace.scroll.next" name="combo.workspace.scroll.next" value="SUPER + mouse_down">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.scroll.next"
+                      data-original="SUPER + mouse_down" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="previous workspace SUPER + mouse_up workspace.scroll.prev">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">previous workspace</span>
+              <span class="bind-row__id mono">workspace.scroll.prev</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-workspace.scroll.prev"
+                      aria-label="Change the combo for previous workspace">
+                <span class="combo__text">SUPER + mouse_up</span>
+              </button>
+              <input type="hidden" id="combo-workspace.scroll.prev" name="combo.workspace.scroll.prev" value="SUPER + mouse_up">
+              <button type="button" class="combo__reset" data-reset="combo-workspace.scroll.prev"
+                      data-original="SUPER + mouse_up" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle scratchpad SUPER + S scratchpad.toggle">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle scratchpad</span>
+              <span class="bind-row__id mono">scratchpad.toggle</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-scratchpad.toggle"
+                      aria-label="Change the combo for toggle scratchpad">
+                <span class="combo__text">SUPER + S</span>
+              </button>
+              <input type="hidden" id="combo-scratchpad.toggle" name="combo.scratchpad.toggle" value="SUPER + S">
+              <button type="button" class="combo__reset" data-reset="combo-scratchpad.toggle"
+                      data-original="SUPER + S" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move to scratchpad SUPER + SHIFT + S scratchpad.move">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move to scratchpad</span>
+              <span class="bind-row__id mono">scratchpad.move</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-scratchpad.move"
+                      aria-label="Change the combo for move to scratchpad">
+                <span class="combo__text">SUPER + SHIFT + S</span>
+              </button>
+              <input type="hidden" id="combo-scratchpad.move" name="combo.scratchpad.move" value="SUPER + SHIFT + S">
+              <button type="button" class="combo__reset" data-reset="combo-scratchpad.move"
+                      data-original="SUPER + SHIFT + S" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="move to scratchpad (silent) SUPER + ALT + S scratchpad.move_silent">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">move to scratchpad (silent)</span>
+              <span class="bind-row__id mono">scratchpad.move_silent</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-scratchpad.move_silent"
+                      aria-label="Change the combo for move to scratchpad (silent)">
+                <span class="combo__text">SUPER + ALT + S</span>
+              </button>
+              <input type="hidden" id="combo-scratchpad.move_silent" name="combo.scratchpad.move_silent" value="SUPER + ALT + S">
+              <button type="button" class="combo__reset" data-reset="combo-scratchpad.move_silent"
+                      data-original="SUPER + ALT + S" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel bind-group">
+      <div class="panel__title">Launchers</div>
+      <div class="panel__body">
+        
+          
+          <div class="bind-row  "
+               data-search="terminal emulator SUPER + T launch.terminal">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">terminal emulator</span>
+              <span class="bind-row__id mono">launch.terminal</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.terminal"
+                      aria-label="Change the combo for terminal emulator">
+                <span class="combo__text">SUPER + T</span>
+              </button>
+              <input type="hidden" id="combo-launch.terminal" name="combo.launch.terminal" value="SUPER + T">
+              <button type="button" class="combo__reset" data-reset="combo-launch.terminal"
+                      data-original="SUPER + T" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="terminal emulator SUPER + RETURN launch.terminal.alt">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">terminal emulator</span>
+              <span class="bind-row__id mono">launch.terminal.alt</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.terminal.alt"
+                      aria-label="Change the combo for terminal emulator">
+                <span class="combo__text">SUPER + RETURN</span>
+              </button>
+              <input type="hidden" id="combo-launch.terminal.alt" name="combo.launch.terminal.alt" value="SUPER + RETURN">
+              <button type="button" class="combo__reset" data-reset="combo-launch.terminal.alt"
+                      data-original="SUPER + RETURN" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="text editor SUPER + C launch.editor">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">text editor</span>
+              <span class="bind-row__id mono">launch.editor</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.editor"
+                      aria-label="Change the combo for text editor">
+                <span class="combo__text">SUPER + C</span>
+              </button>
+              <input type="hidden" id="combo-launch.editor" name="combo.launch.editor" value="SUPER + C">
+              <button type="button" class="combo__reset" data-reset="combo-launch.editor"
+                      data-original="SUPER + C" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="file explorer SUPER + E launch.explorer">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">file explorer</span>
+              <span class="bind-row__id mono">launch.explorer</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.explorer"
+                      aria-label="Change the combo for file explorer">
+                <span class="combo__text">SUPER + E</span>
+              </button>
+              <input type="hidden" id="combo-launch.explorer" name="combo.launch.explorer" value="SUPER + E">
+              <button type="button" class="combo__reset" data-reset="combo-launch.explorer"
+                      data-original="SUPER + E" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="web browser SUPER + B launch.browser">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">web browser</span>
+              <span class="bind-row__id mono">launch.browser</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.browser"
+                      aria-label="Change the combo for web browser">
+                <span class="combo__text">SUPER + B</span>
+              </button>
+              <input type="hidden" id="combo-launch.browser" name="combo.launch.browser" value="SUPER + B">
+              <button type="button" class="combo__reset" data-reset="combo-launch.browser"
+                      data-original="SUPER + B" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="ai assistant SUPER + SHIFT + C launch.ai">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">ai assistant</span>
+              <span class="bind-row__id mono">launch.ai</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.ai"
+                      aria-label="Change the combo for ai assistant">
+                <span class="combo__text">SUPER + SHIFT + C</span>
+              </button>
+              <input type="hidden" id="combo-launch.ai" name="combo.launch.ai" value="SUPER + SHIFT + C">
+              <button type="button" class="combo__reset" data-reset="combo-launch.ai"
+                      data-original="SUPER + SHIFT + C" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="application finder SUPER + R launch.launcher">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">application finder</span>
+              <span class="bind-row__id mono">launch.launcher</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.launcher"
+                      aria-label="Change the combo for application finder">
+                <span class="combo__text">SUPER + R</span>
+              </button>
+              <input type="hidden" id="combo-launch.launcher" name="combo.launch.launcher" value="SUPER + R">
+              <button type="button" class="combo__reset" data-reset="combo-launch.launcher"
+                      data-original="SUPER + R" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="window switcher SUPER + TAB launch.window_menu">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">window switcher</span>
+              <span class="bind-row__id mono">launch.window_menu</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-launch.window_menu"
+                      aria-label="Change the combo for window switcher">
+                <span class="combo__text">SUPER + TAB</span>
+              </button>
+              <input type="hidden" id="combo-launch.window_menu" name="combo.launch.window_menu" value="SUPER + TAB">
+              <button type="button" class="combo__reset" data-reset="combo-launch.window_menu"
+                      data-original="SUPER + TAB" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="screenshot a region SUPER + P shot.region">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">screenshot a region</span>
+              <span class="bind-row__id mono">shot.region</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-shot.region"
+                      aria-label="Change the combo for screenshot a region">
+                <span class="combo__text">SUPER + P</span>
+              </button>
+              <input type="hidden" id="combo-shot.region" name="combo.shot.region" value="SUPER + P">
+              <button type="button" class="combo__reset" data-reset="combo-shot.region"
+                      data-original="SUPER + P" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="screenshot all monitors Print shot.screen">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">screenshot all monitors</span>
+              <span class="bind-row__id mono">shot.screen</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-shot.screen"
+                      aria-label="Change the combo for screenshot all monitors">
+                <span class="combo__text">Print</span>
+              </button>
+              <input type="hidden" id="combo-shot.screen" name="combo.shot.screen" value="Print">
+              <button type="button" class="combo__reset" data-reset="combo-shot.screen"
+                      data-original="Print" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel bind-group">
+      <div class="panel__title">Hardware</div>
+      <div class="panel__body">
+        
+          
+          <div class="bind-row  "
+               data-search="toggle output mute XF86AudioMute audio.mute">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle output mute</span>
+              <span class="bind-row__id mono">audio.mute</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.mute"
+                      aria-label="Change the combo for toggle output mute">
+                <span class="combo__text">XF86AudioMute</span>
+              </button>
+              <input type="hidden" id="combo-audio.mute" name="combo.audio.mute" value="XF86AudioMute">
+              <button type="button" class="combo__reset" data-reset="combo-audio.mute"
+                      data-original="XF86AudioMute" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle output mute F10 audio.mute.fkey">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle output mute</span>
+              <span class="bind-row__id mono">audio.mute.fkey</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.mute.fkey"
+                      aria-label="Change the combo for toggle output mute">
+                <span class="combo__text">F10</span>
+              </button>
+              <input type="hidden" id="combo-audio.mute.fkey" name="combo.audio.mute.fkey" value="F10">
+              <button type="button" class="combo__reset" data-reset="combo-audio.mute.fkey"
+                      data-original="F10" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="decrease volume XF86AudioLowerVolume audio.down">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">decrease volume</span>
+              <span class="bind-row__id mono">audio.down</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.down"
+                      aria-label="Change the combo for decrease volume">
+                <span class="combo__text">XF86AudioLowerVolume</span>
+              </button>
+              <input type="hidden" id="combo-audio.down" name="combo.audio.down" value="XF86AudioLowerVolume">
+              <button type="button" class="combo__reset" data-reset="combo-audio.down"
+                      data-original="XF86AudioLowerVolume" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="decrease volume F11 audio.down.fkey">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">decrease volume</span>
+              <span class="bind-row__id mono">audio.down.fkey</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.down.fkey"
+                      aria-label="Change the combo for decrease volume">
+                <span class="combo__text">F11</span>
+              </button>
+              <input type="hidden" id="combo-audio.down.fkey" name="combo.audio.down.fkey" value="F11">
+              <button type="button" class="combo__reset" data-reset="combo-audio.down.fkey"
+                      data-original="F11" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="increase volume XF86AudioRaiseVolume audio.up">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">increase volume</span>
+              <span class="bind-row__id mono">audio.up</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.up"
+                      aria-label="Change the combo for increase volume">
+                <span class="combo__text">XF86AudioRaiseVolume</span>
+              </button>
+              <input type="hidden" id="combo-audio.up" name="combo.audio.up" value="XF86AudioRaiseVolume">
+              <button type="button" class="combo__reset" data-reset="combo-audio.up"
+                      data-original="XF86AudioRaiseVolume" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="increase volume F12 audio.up.fkey">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">increase volume</span>
+              <span class="bind-row__id mono">audio.up.fkey</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.up.fkey"
+                      aria-label="Change the combo for increase volume">
+                <span class="combo__text">F12</span>
+              </button>
+              <input type="hidden" id="combo-audio.up.fkey" name="combo.audio.up.fkey" value="F12">
+              <button type="button" class="combo__reset" data-reset="combo-audio.up.fkey"
+                      data-original="F12" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              <span class="pill" title="Fires while held">repeat</span>
+              
+            </div>
+
+            
+            
+          </div>
+        
+          
+          <div class="bind-row  "
+               data-search="toggle mic mute XF86AudioMicMute audio.mic_mute">
+            <div class="bind-row__what">
+              <span class="bind-row__desc">toggle mic mute</span>
+              <span class="bind-row__id mono">audio.mic_mute</span>
+            </div>
+
+            <div class="bind-row__keys">
+              <button type="button" class="combo" data-input="combo-audio.mic_mute"
+                      aria-label="Change the combo for toggle mic mute">
+                <span class="combo__text">XF86AudioMicMute</span>
+              </button>
+              <input type="hidden" id="combo-audio.mic_mute" name="combo.audio.mic_mute" value="XF86AudioMicMute">
+              <button type="button" class="combo__reset" data-reset="combo-audio.mic_mute"
+                      data-original="XF86AudioMicMute" title="Undo this change" hidden>undo</button>
+            </div>
+
+            <div class="bind-row__flags">
+              <span class="pill" title="Fires while the screen is locked">locked</span>
+              
+              
+            </div>
+
+            
+            
+          </div>
+        
+      </div>
+    </div>
+  
+  </div>
+
+  <p class="empty" id="bind-empty" hidden>Nothing matches that search.</p>
+
+  
+    <p class="empty">Editing is disabled in the demo. Search and browsing work.</p>
+  
+</form>
+
+<div class="capture" id="capture" hidden>
+  <div class="capture__box">
+    <p class="capture__label">Hold the keys</p>
+    <p class="capture__combo mono" id="capture-combo">...</p>
+    <p class="capture__hint">
+      Release to accept &middot; <kbd>Esc</kbd> cancels &middot; <kbd>Backspace</kbd> clears
+    </p>
+  </div>
+</div>
+
+  </main>
+
+  <script src="/static/js/app.js?v=1789265628" defer></script>
+</body>
+</html>

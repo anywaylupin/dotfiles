@@ -87,26 +87,11 @@ find "$DIST" -name '*.html' -print0 | while IFS= read -r -d '' f; do
 done
 grep -rl "$USER_NAME" "$DIST" 2>/dev/null && echo "  !! still present, check manually" || echo "  clean"
 
-echo "==> vercel.json"
-cat > "$DIST/vercel.json" <<'JSON'
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/static/(.*)",
-      "headers": [{ "key": "cache-control", "value": "public, max-age=31536000, immutable" }]
-    }
-  ]
-}
-JSON
-
 echo
 echo "Built $DIST ($(du -sh "$DIST" | cut -f1))"
 echo
-echo "Preview:  cd dist && python3 -m http.server 8000"
-echo "Deploy:   cd dist && npx vercel deploy --prod"
+echo "Preview: cd dist && python3 -m http.server 8000"
+echo "Publish: tools/publish.sh   (commits dist/ for Vercel to serve)"
 echo
 echo "The theme images load from gamesci.cn at view time. If they ever vanish,"
 echo "their content hashes changed - update the nine URLs at the top of"

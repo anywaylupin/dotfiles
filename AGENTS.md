@@ -248,6 +248,13 @@ blanks and fails every write.
 `tools/export-static.sh` is the supported answer: it renders every route to
 static HTML with `ARCHCONFIG_DEMO=1` and a frozen data snapshot.
 
+**`dist/` is committed on purpose.** Vercel serves it with no build step, which
+`vercel.json` at the repo root configures (`outputDirectory: dist`, empty build
+and install commands). Do not add a build command and do not gitignore `dist/`
+again - a Vercel build container cannot render these pages, so committing the
+output is the only way the git integration can work. `tools/publish.sh` rebuilds
+and commits it, and refuses to run with unrelated uncommitted changes.
+
 Three properties of that export matter and are easy to break:
 
 - **`ARCHCONFIG_DEMO=1` must disable editing.** Both forms get `inert`, the save

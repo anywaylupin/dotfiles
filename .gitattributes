@@ -1,0 +1,9 @@
+# dist/ is built by tools/export-static.sh. Marking it generated collapses it in
+# GitHub's diff view and keeps it out of the repo's language stats, while local
+# `git diff` still shows the real changes.
+dist/**            linguist-generated=true
+
+*.webm             binary
+*.woff             binary
+*.woff2            binary
+*.ico              binary

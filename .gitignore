@@ -7,9 +7,6 @@
 # Backups written by hypr/install.sh and the web UI
 .backup/
 
-# Static export from tools/export-static.sh
-dist/
-
 # Lapis leftovers
 nginx.conf.compiled
 logs/

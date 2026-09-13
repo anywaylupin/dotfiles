@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="wukong">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyprland · arch config</title>
+  <link rel="icon" href="/static/favicon.ico" sizes="any">
+  
+  <link rel="preload" href="/static/fonts/CrimsonPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/wukong.css?v=1789265628">
+</head>
+<body class="shell is-demo">
+
+  <div class="scroll-grain" aria-hidden="true"></div>
+
+  
+    <div class="demo-bar">
+      <strong>Read-only demo.</strong>
+      A static snapshot - there is no compositor behind it, so editing is off.
+      Run it locally to change anything.
+    </div>
+  
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      <span class="brand__text">arch<span class="brand__thin">config</span></span>
+    </a>
+
+    <nav class="topnav">
+      
+        <a class="topnav__item "
+           href="/system">
+          <span class="topnav__glyph" aria-hidden="true">◲</span>
+          System
+        </a>
+      
+        <a class="topnav__item is-active"
+           href="/hypr">
+          <span class="topnav__glyph" aria-hidden="true">◈</span>
+          Hyprland
+        </a>
+      
+        <a class="topnav__item "
+           href="/hypr/binds">
+          <span class="topnav__glyph" aria-hidden="true">⌨</span>
+          Keybinds
+        </a>
+      
+        <a class="topnav__item "
+           href="/resources">
+          <span class="topnav__glyph" aria-hidden="true">❖</span>
+          Resources
+        </a>
+      
+    </nav>
+
+    
+      <a class="topbar__repo" href="https://github.com/user/dotfiles" target="_blank" rel="noreferrer noopener"
+         title="Source on GitHub">
+        <svg class="topbar__repo-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47
+            7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+            1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+            0-.87.31-1.59.82-2.15-.07-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0
+            1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.15 1.92.08 2.12.51.56.82 1.27.82 2.15 0
+            3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01
+            8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+        </svg>
+        GitHub
+      </a>
+    
+  </header>
+
+  <main class="stage">
+    
+<header class="page-head">
+  <div>
+    <h1 class="page-head__title">Hyprland</h1>
+    <p class="page-head__sub">
+      Writes <code>hypr/settings.lua</code>, verifies it through
+      <code>Hyprland --verify-config</code>, then reloads the running session.
+    </p>
+  </div>
+</header>
+
+
+
+
+
+
+
+<form method="post" action="/hypr/save" class="form" inert>
+  <input type="hidden" name="csrf_token" value="eyJrIjoibXVLd0tuQWswTXpxZjljNm15K2lac0oyMVR0RG5NSnYyUUJ3c1FUa3hBST0ifQ==.qtkNE3eYBtgH8eB37y4oaLUfDQ8=">
+
+  <div class="toolbar">
+    <label class="search">
+      <span class="search__glyph" aria-hidden="true">⌕</span>
+      <input type="search" id="field-search" class="search__input"
+             placeholder="Search settings by name or section" autocomplete="off"
+             data-target=".field" data-empty="#field-empty">
+    </label>
+    <span class="toolbar__count" id="field-count"></span>
+    <a class="toolbar__link" href="/hypr/binds">Keybinds &rsaquo;</a>
+  </div>
+  <div class="grid">
+  
+    <div class="panel">
+      <div class="panel__title">Layout</div>
+      <div class="panel__body">
+        <p class="panel__blurb">Gaps, borders and the tiling algorithm.</p>
+
+        
+          
+          <div class="field "
+               data-search="Inner gap Layout general.gaps_in Between windows.">
+            <label class="field__label" for="general.gaps_in">Inner gap</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="general.gaps_in" name="general.gaps_in"
+                         min="0" max="50"
+                         step="1" value="6"
+                         data-readout="general.gaps_in-out">
+                  <output id="general.gaps_in-out" class="slider__out mono">6</output>
+                </div>
+
+              
+
+              <p class="field__help">Between windows.</p>
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Outer gap Layout general.gaps_out Window to screen edge.">
+            <label class="field__label" for="general.gaps_out">Outer gap</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="general.gaps_out" name="general.gaps_out"
+                         min="0" max="100"
+                         step="1" value="20"
+                         data-readout="general.gaps_out-out">
+                  <output id="general.gaps_out-out" class="slider__out mono">20</output>
+                </div>
+
+              
+
+              <p class="field__help">Window to screen edge.</p>
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Border width Layout general.border_size ">
+            <label class="field__label" for="general.border_size">Border width</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="general.border_size" name="general.border_size"
+                         min="0" max="12"
+                         step="1" value="2"
+                         data-readout="general.border_size-out">
+                  <output id="general.border_size-out" class="slider__out mono">2</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Resize on border Layout general.resize_on_border Drag borders and gaps to resize.">
+            <label class="field__label" for="general.resize_on_border">Resize on border</label>
+
+            <div class="field__control">
+              
+                <input type="hidden" name="general.resize_on_border" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="general.resize_on_border" name="general.resize_on_border" value="1"
+                         >
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              
+
+              <p class="field__help">Drag borders and gaps to resize.</p>
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Tiling layout Layout general.layout ">
+            <label class="field__label" for="general.layout">Tiling layout</label>
+
+            <div class="field__control">
+              
+                <select id="general.layout" name="general.layout" class="select">
+                  
+                    <option value="dwindle"
+                      selected>Dwindle - split the focused window</option>
+                  
+                    <option value="master"
+                      >Master - one main window plus a stack</option>
+                  
+                    <option value="scrolling"
+                      >Scrolling - an endless column strip</option>
+                  
+                </select>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Decoration</div>
+      <div class="panel__body">
+        <p class="panel__blurb">Corners and window opacity.</p>
+
+        
+          
+          <div class="field "
+               data-search="Corner radius Decoration decoration.rounding ">
+            <label class="field__label" for="decoration.rounding">Corner radius</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="decoration.rounding" name="decoration.rounding"
+                         min="0" max="30"
+                         step="1" value="10"
+                         data-readout="decoration.rounding-out">
+                  <output id="decoration.rounding-out" class="slider__out mono">10</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Corner curve Decoration decoration.rounding_power 2 is circular; higher is squarer.">
+            <label class="field__label" for="decoration.rounding_power">Corner curve</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="decoration.rounding_power" name="decoration.rounding_power"
+                         min="2" max="10"
+                         step="0.1" value="2"
+                         data-readout="decoration.rounding_power-out">
+                  <output id="decoration.rounding_power-out" class="slider__out mono">2</output>
+                </div>
+
+              
+
+              <p class="field__help">2 is circular; higher is squarer.</p>
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Active opacity Decoration decoration.active_opacity ">
+            <label class="field__label" for="decoration.active_opacity">Active opacity</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="decoration.active_opacity" name="decoration.active_opacity"
+                         min="0.1" max="1"
+                         step="0.01" value="1"
+                         data-readout="decoration.active_opacity-out">
+                  <output id="decoration.active_opacity-out" class="slider__out mono">1</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Inactive opacity Decoration decoration.inactive_opacity ">
+            <label class="field__label" for="decoration.inactive_opacity">Inactive opacity</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="decoration.inactive_opacity" name="decoration.inactive_opacity"
+                         min="0.1" max="1"
+                         step="0.01" value="1"
+                         data-readout="decoration.inactive_opacity-out">
+                  <output id="decoration.inactive_opacity-out" class="slider__out mono">1</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Blur</div>
+      <div class="panel__body">
+        <p class="panel__blurb">Costs GPU time; passes are more expensive than size.</p>
+
+        
+          
+          <div class="field "
+               data-search="Enabled Blur blur.enabled ">
+            <label class="field__label" for="blur.enabled">Enabled</label>
+
+            <div class="field__control">
+              
+                <input type="hidden" name="blur.enabled" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="blur.enabled" name="blur.enabled" value="1"
+                         checked>
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Size Blur blur.size ">
+            <label class="field__label" for="blur.size">Size</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="blur.size" name="blur.size"
+                         min="1" max="20"
+                         step="1" value="3"
+                         data-readout="blur.size-out">
+                  <output id="blur.size-out" class="slider__out mono">3</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Passes Blur blur.passes ">
+            <label class="field__label" for="blur.passes">Passes</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="blur.passes" name="blur.passes"
+                         min="1" max="5"
+                         step="1" value="1"
+                         data-readout="blur.passes-out">
+                  <output id="blur.passes-out" class="slider__out mono">1</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Shadow</div>
+      <div class="panel__body">
+        
+
+        
+          
+          <div class="field "
+               data-search="Enabled Shadow shadow.enabled ">
+            <label class="field__label" for="shadow.enabled">Enabled</label>
+
+            <div class="field__control">
+              
+                <input type="hidden" name="shadow.enabled" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="shadow.enabled" name="shadow.enabled" value="1"
+                         checked>
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Range Shadow shadow.range ">
+            <label class="field__label" for="shadow.range">Range</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="shadow.range" name="shadow.range"
+                         min="0" max="50"
+                         step="1" value="4"
+                         data-readout="shadow.range-out">
+                  <output id="shadow.range-out" class="slider__out mono">4</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Animations</div>
+      <div class="panel__body">
+        <p class="panel__blurb">The curves and leaf tree stay in hypr/conf/animations.lua.</p>
+
+        
+          
+          <div class="field "
+               data-search="Enabled Animations animations.enabled ">
+            <label class="field__label" for="animations.enabled">Enabled</label>
+
+            <div class="field__control">
+              
+                <input type="hidden" name="animations.enabled" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="animations.enabled" name="animations.enabled" value="1"
+                         checked>
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="panel">
+      <div class="panel__title">Input</div>
+      <div class="panel__body">
+        
+
+        
+          
+          <div class="field "
+               data-search="Keyboard layout Input input.kb_layout An xkb layout name, or a comma-separated list.">
+            <label class="field__label" for="input.kb_layout">Keyboard layout</label>
+
+            <div class="field__control">
+              
+                <input type="text" id="input.kb_layout" name="input.kb_layout" class="input mono"
+                       value="us">
+              
+
+              <p class="field__help">An xkb layout name, or a comma-separated list.</p>
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Focus follows mouse Input input.follow_mouse ">
+            <label class="field__label" for="input.follow_mouse">Focus follows mouse</label>
+
+            <div class="field__control">
+              
+                <select id="input.follow_mouse" name="input.follow_mouse" class="select">
+                  
+                    <option value="0"
+                      >0 - off</option>
+                  
+                    <option value="1"
+                      selected>1 - focus follows the cursor</option>
+                  
+                    <option value="2"
+                      >2 - loose, keyboard focus stays</option>
+                  
+                    <option value="3"
+                      >3 - focus follows, no click-through</option>
+                  
+                </select>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Mouse sensitivity Input input.sensitivity ">
+            <label class="field__label" for="input.sensitivity">Mouse sensitivity</label>
+
+            <div class="field__control">
+              
+                <div class="slider">
+                  <input type="range" id="input.sensitivity" name="input.sensitivity"
+                         min="-1" max="1"
+                         step="0.05" value="0"
+                         data-readout="input.sensitivity-out">
+                  <output id="input.sensitivity-out" class="slider__out mono">0</output>
+                </div>
+
+              
+
+              
+              
+            </div>
+          </div>
+        
+          
+          <div class="field "
+               data-search="Natural scroll Input input.natural_scroll Touchpad.">
+            <label class="field__label" for="input.natural_scroll">Natural scroll</label>
+
+            <div class="field__control">
+              
+                <input type="hidden" name="input.natural_scroll" value="0">
+                <label class="switch">
+                  <input type="checkbox" id="input.natural_scroll" name="input.natural_scroll" value="1"
+                         >
+                  <span class="switch__track"><span class="switch__thumb"></span></span>
+                </label>
+
+              
+
+              <p class="field__help">Touchpad.</p>
+              
+            </div>
+          </div>
+        
+      </div>
+    </div>
+  
+  </div>
+
+  <p class="empty" id="field-empty" hidden>Nothing matches that search.</p>
+
+  
+    <p class="empty">Editing is disabled in the demo. Search and browsing work.</p>
+  
+</form>
+
+  </main>
+
+  <script src="/static/js/app.js?v=1789265628" defer></script>
+</body>
+</html>

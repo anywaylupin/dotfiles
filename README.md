@@ -109,14 +109,31 @@ What does work is a **static snapshot**: every page rendered to plain HTML with 
 frozen copy of this machine's data. It looks exactly like the local app and is
 read-only.
 
+The build has to happen here, not on Vercel, because this is where the data
+lives. So `dist/` is committed and Vercel serves it with no build step.
+
 ```bash
-tools/export-static.sh
-cd dist && npx vercel deploy --prod
+tools/publish.sh        # rebuild dist/ and commit it
+git push                # when you are ready
 ```
 
-`dist/` is gitignored and ships with a `vercel.json`. Preview first with
-`cd dist && python3 -m http.server 8000`. Netlify, Cloudflare Pages and GitHub
-Pages work the same way - it is only files.
+Then deploy from the Vercel dashboard, or let the git integration do it on push.
+
+`tools/publish.sh --push` pushes too; `--dry-run` builds and shows the diff
+without committing. It refuses to run while you have uncommitted work outside
+`dist/`, so an export never sweeps up unrelated changes.
+
+`vercel.json` at the repo root is what tells Vercel not to build:
+
+| Field | Why |
+|---|---|
+| `outputDirectory: "dist"` | Serve the committed export |
+| `buildCommand: ""` | Run nothing. There is nothing to build. |
+| `installCommand: ""` | No dependencies to install |
+| `cleanUrls: true` | `/system` rather than `/system/index.html` |
+
+If Vercel ever ignores a field, the same settings exist in the dashboard under
+Project Settings, Build and Deployment, and those override the file.
 
 What the export does:
 
@@ -129,6 +146,11 @@ What the export does:
   paths under `/home/<you>` and `/run/media/<you>`
 
 Search and browsing still work in the export; only editing is off.
+
+The wallpaper ends up committed at two paths, `src/static/assets/` and
+`dist/static/assets/`. That costs nothing: the bytes are identical, and git
+stores one blob per content hash. Each rebuild adds roughly 150 KB of changed
+HTML.
 
 ### Where the images come from
 
@@ -164,6 +186,7 @@ option and some authentication first. Ask and I will add it.
 | `hyprctl monitors` | List outputs and their modes |
 | `hyprctl binds` | List the binds actually loaded |
 | `tools/export-static.sh` | Build the static showcase into `dist/` |
+| `tools/publish.sh` | Rebuild `dist/` and commit it for Vercel |
 
 ## Where things live
 
@@ -171,6 +194,9 @@ option and some authentication first. Ask and I will add it.
 dev                      start/stop the server
 tools/
   export-static.sh       render every page to dist/ as a static site
+  publish.sh             rebuild dist/ and commit it
+dist/                    the committed static build Vercel serves
+vercel.json              tells Vercel to serve dist/ without building
 src/
   app.lua                root app: routes, /static, 404
   config.lua             port, backend, secret
